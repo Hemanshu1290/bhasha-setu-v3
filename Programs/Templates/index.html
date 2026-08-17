@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Government AI Assistant</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>🇮🇳 Government AI Assistant</h1>
+            <p>Multilingual assistance for government services</p>
+        </header>
+
+        <div class="language-box">
+
+            <label>Select Language:</label>
+
+            <select id="language">
+
+                <option value="English">English</option>
+                <option value="Tamil">தமிழ்</option>
+                <option value="Hindi">हिन्दी</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="services">
+
+            <button onclick="setQuestion('How can I apply for a PAN card?')">
+                PAN Card
+            </button>
+
+            <button onclick="setQuestion('How can I apply for a voter ID?')">
+                Voter ID
+            </button>
+
+            <button onclick="setQuestion('What documents are required for a government certificate?')">
+                Certificates
+            </button>
+
+            <button onclick="setQuestion('What government welfare schemes may be available to citizens?')">
+                Welfare Schemes
+            </button>
+
+        </div>
+
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="bot-message">
+                Hello! How can I help you with government services?
+            </div>
+
+        </div>
+
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="question"
+                placeholder="Ask your government service question..."
+                onkeypress="handleKey(event)"
+            >
+
+            <button onclick="askAI()">
+                Ask
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
