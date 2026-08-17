@@ -1,0 +1,101 @@
+{
+    "pan_card": {
+        "name": "PAN Card",
+        "category": "Identity & Documents",
+        "description": "Information about applying for a PAN card.",
+        "eligibility": "Individuals who need a Permanent Account Number for applicable financial and identification purposes.",
+        "documents": [
+            "Proof of identity",
+            "Proof of address",
+            "Proof of date of birth"
+        ],
+        "procedure": [
+            "Choose the appropriate PAN application service.",
+            "Fill in the required application details.",
+            "Submit the required supporting documents.",
+            "Complete the applicable verification process.",
+            "Track the application status."
+        ],
+        "official_url": "https://www.incometax.gov.in/"
+    },
+
+    "voter_id": {
+        "name": "Voter ID",
+        "category": "Identity & Documents",
+        "description": "Information about voter registration.",
+        "eligibility": "Eligible Indian citizens can register as voters subject to applicable electoral rules.",
+        "documents": [
+            "Proof of identity",
+            "Proof of residence",
+            "Age-related proof where required"
+        ],
+        "procedure": [
+            "Open the official voter services portal.",
+            "Choose the appropriate registration service.",
+            "Enter the required information.",
+            "Upload supporting documents.",
+            "Submit the application."
+        ],
+        "official_url": "https://voters.eci.gov.in/"
+    },
+
+    "passport": {
+        "name": "Passport",
+        "category": "Identity & Documents",
+        "description": "Information about passport application.",
+        "eligibility": "Indian citizens can apply for a passport subject to applicable rules.",
+        "documents": [
+            "Proof of identity",
+            "Proof of address",
+            "Other documents applicable to the applicant"
+        ],
+        "procedure": [
+            "Register on the official passport portal.",
+            "Complete the application.",
+            "Pay the applicable fee.",
+            "Schedule an appointment if required.",
+            "Attend the appointment with required documents."
+        ],
+        "official_url": "https://www.passportindia.gov.in/"
+    },
+
+    "birth_certificate": {
+        "name": "Birth Certificate",
+        "category": "Certificates",
+        "description": "Information about obtaining a birth certificate.",
+        "eligibility": "Births are registered according to the applicable registration rules and local authority procedures.",
+        "documents": [
+            "Birth-related records",
+            "Identity documents where required",
+            "Documents specified by the relevant local authority"
+        ],
+        "procedure": [
+            "Identify the appropriate local registration authority.",
+            "Submit the required application.",
+            "Provide supporting documents.",
+            "Complete the verification process.",
+            "Obtain the certificate according to the authority's procedure."
+        ],
+        "official_url": "https://crsorgi.gov.in/"
+    },
+
+    "income_certificate": {
+        "name": "Income Certificate",
+        "category": "Certificates",
+        "description": "Information about income certificate services.",
+        "eligibility": "Eligibility and issuing procedures depend on the applicable state or local authority.",
+        "documents": [
+            "Identity proof",
+            "Address proof",
+            "Income-related supporting documents"
+        ],
+        "procedure": [
+            "Identify the relevant state or local government service.",
+            "Complete the application.",
+            "Submit supporting documents.",
+            "Complete verification if required.",
+            "Download or collect the certificate according to the authority's process."
+        ],
+        "official_url": "https://www.india.gov.in/"
+    }
+}

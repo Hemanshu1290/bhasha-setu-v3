@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Government Service Navigator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<!-- Animated background -->
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🇮🇳
+        </div>
+
+        <div>
+
+            <h1>Government Service Navigator</h1>
+
+            <p>
+                Your intelligent guide to government services
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <div class="language-box">
+
+            🌐
+
+            <select id="language">
+
+                <option value="English">
+                    English
+                </option>
+
+                <option value="Tamil">
+                    தமிழ்
+                </option>
+
+                <option value="Hindi">
+                    हिन्दी
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button class="header-button"
+                onclick="startVoice()">
+
+            🎤 Speak
+
+        </button>
+
+
+        <button class="header-ai"
+                onclick="document.getElementById('question').focus()">
+
+            ✨ Ask AI
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-badge">
+
+            ✨ AI-POWERED GOVERNMENT ASSISTANCE
+
+        </div>
+
+
+        <h2>
+
+            How can we help you
+            <span>today?</span> 👋
+
+        </h2>
+
+
+        <p class="hero-subtitle">
+
+            Tell us what you need in your own words.
+            We'll help you find the right government service.
+
+        </p>
+
+
+
+        <!-- SMART SEARCH -->
+
+        <div class="smart-search">
+
+            <div class="search-icon">
+                🔎
+            </div>
+
+
+            <input
+
+                type="text"
+
+                id="question"
+
+                placeholder="Example: I need a certificate showing my income..."
+
+                onkeydown="if(event.key === 'Enter') askAI()"
+
+            >
+
+
+            <button
+    class="microphone-button"
+    onclick="startVoice()">
+
+    🎤
+
+</button>
+
+
+<button
+    class="find-button"
+    onclick="askAI()">
+
+    Find Service
+    <span>→</span>
+
+</button>
+
+
+<button
+    class="voice-stop-button"
+    onclick="stopSpeaking()">
+
+    🔇 Mute
+
+</button>
+
+        </div>
+
+
+        <p id="voiceStatus"
+           class="voice-status">
+
+        </p>
+
+
+        <!-- POPULAR -->
+
+        <div class="popular">
+
+            <span>Popular:</span>
+
+            <a href="/service/pan_card">
+                PAN Card
+            </a>
+
+            <a href="/service/voter_id">
+                Voter ID
+            </a>
+
+            <a href="/service/passport">
+                Passport
+            </a>
+
+            <a href="/service/income_certificate">
+                Income Certificate
+            </a>
+
+            <a href="/service/birth_certificate">
+                Birth Certificate
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CATEGORIES ================= -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="small-label">
+                    EXPLORE
+                </span>
+
+                <h3>
+                    What are you looking for?
+                </h3>
+
+            </div>
+
+            <span class="service-count">
+                5+ services available
+            </span>
+
+        </div>
+
+
+
+        <div class="category-grid">
+
+
+            <a href="/service/pan_card"
+               class="category-card">
+
+                <div class="category-icon blue">
+                    🪪
+                </div>
+
+                <h4>
+                    Identity & Documents
+                </h4>
+
+                <p>
+                    PAN • Voter ID • Passport
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <a href="/service/passport"
+               class="category-card">
+
+                <div class="category-icon green">
+                    ✈️
+                </div>
+
+                <h4>
+                    Travel & Passport
+                </h4>
+
+                <p>
+                    Passport and travel services
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <a href="/service/birth_certificate"
+               class="category-card">
+
+                <div class="category-icon orange">
+                    📜
+                </div>
+
+                <h4>
+                    Certificates
+                </h4>
+
+                <p>
+                    Birth • Income • Other certificates
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <a href="#"
+               class="category-card">
+
+                <div class="category-icon purple">
+                    🚗
+                </div>
+
+                <h4>
+                    Licences
+                </h4>
+
+                <p>
+                    Driving and other licences
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <a href="#"
+               class="category-card">
+
+                <div class="category-icon cyan">
+                    🚙
+                </div>
+
+                <h4>
+                    Vehicles
+                </h4>
+
+                <p>
+                    Registration • RC • Transport
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <a href="#"
+               class="category-card">
+
+                <div class="category-icon pink">
+                    ❤️
+                </div>
+
+                <h4>
+                    Welfare Schemes
+                </h4>
+
+                <p>
+                    Benefits and government schemes
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= AI NAVIGATOR ================= -->
+
+    <section class="navigator-section">
+
+
+        <!-- LEFT -->
+
+        <div class="navigator-intro">
+
+            <div class="ai-orb">
+
+                ✨
+
+            </div>
+
+
+            <span class="small-label">
+                SMART NAVIGATION
+            </span>
+
+
+            <h3>
+                You don't need to know
+                the service name.
+            </h3>
+
+
+            <p>
+
+                Simply describe your problem in
+                everyday language. Our AI will help
+                identify the government service
+                you may need.
+
+            </p>
+
+
+            <div class="example-question">
+
+                <span>💡</span>
+
+                <div>
+
+                    <strong>
+                        Try saying:
+                    </strong>
+
+                    <p>
+                        "I need a document to prove my income."
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                onclick="document.getElementById('question').focus()">
+
+                ✨ Find My Service
+
+                <span>→</span>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- RIGHT -->
+
+        <div class="suggestion-panel">
+
+            <div class="panel-top">
+
+                <div>
+
+                    <span class="ai-label">
+                        ✨ AI NAVIGATOR
+                    </span>
+
+                    <h4>
+                        Service identification
+                    </h4>
+
+                </div>
+
+                <div class="online">
+
+                    <span></span>
+                    AI Ready
+
+                </div>
+
+            </div>
+
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+                <h4>
+                    Tell us what you need
+                </h4>
+
+                <p>
+                    Your suggested government service
+                    will appear here.
+                </p>
+
+            </div>
+
+
+            <div id="chatBox"
+                 class="chat-result">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= QUICK SERVICES ================= -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="small-label">
+                    QUICK ACCESS
+                </span>
+
+                <h3>
+                    Popular Government Services
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+
+            <a href="/service/pan_card"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🪪
+                </span>
+
+                <div>
+
+                    <strong>
+                        PAN Card
+                    </strong>
+
+                    <small>
+                        Identity & tax
+                    </small>
+
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+
+
+            <a href="/service/voter_id"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🗳️
+                </span>
+
+                <div>
+
+                    <strong>
+                        Voter ID
+                    </strong>
+
+                    <small>
+                        Election services
+                    </small>
+
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+
+
+            <a href="/service/passport"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🛂
+                </span>
+
+                <div>
+
+                    <strong>
+                        Passport
+                    </strong>
+
+                    <small>
+                        Travel document
+                    </small>
+
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+
+
+            <a href="/service/income_certificate"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    📄
+                </span>
+
+                <div>
+
+                    <strong>
+                        Income Certificate
+                    </strong>
+
+                    <small>
+                        Certificates
+                    </small>
+
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= WHY US ================= -->
+
+    <section class="trust-section">
+
+
+        <div class="trust-header">
+
+            <span class="small-label">
+                BUILT FOR CITIZENS
+            </span>
+
+            <h3>
+                Government services,
+                made simpler.
+            </h3>
+
+        </div>
+
+
+        <div class="trust-grid">
+
+
+            <div class="trust-card">
+
+                <div>
+                    🎯
+                </div>
+
+                <h4>
+                    Simple Guidance
+                </h4>
+
+                <p>
+                    Complex government procedures
+                    explained in simple language.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    🌐
+                </div>
+
+                <h4>
+                    Multilingual
+                </h4>
+
+                <p>
+                    Access assistance in English,
+                    Tamil and Hindi.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    🎤
+                </div>
+
+                <h4>
+                    Voice Enabled
+                </h4>
+
+                <p>
+                    Speak your question instead
+                    of typing it.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    🛡️
+                </div>
+
+                <h4>
+                    Privacy First
+                </h4>
+
+                <p>
+                    Never share OTPs, passwords,
+                    PINs or sensitive information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= SAFETY ================= -->
+
+    <section class="safety-banner">
+
+        <div class="safety-icon">
+            🛡️
+        </div>
+
+
+        <div>
+
+            <strong>
+                Your safety comes first.
+            </strong>
+
+            <p>
+
+                We will never ask you for an OTP,
+                password, bank PIN or card details.
+
+            </p>
+
+        </div>
+
+
+        <span class="shield">
+            ✓
+        </span>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div>
+
+        <strong>
+            🇮🇳 Government Service Navigator
+        </strong>
+
+        <p>
+            Making government services easier
+            to understand and access.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="https://www.india.gov.in/"
+           target="_blank">
+
+            India.gov.in
+
+        </a>
+
+        <span>•</span>
+
+        <a href="#">
+            Help
+        </a>
+
+        <span>•</span>
+
+        <a href="#">
+            Privacy
+        </a>
+
+    </div>
+
+</footer>
+
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}">
+</script>
+
+
+</body>
+
+</html>
