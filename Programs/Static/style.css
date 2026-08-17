@@ -83,26 +83,45 @@ header h1 {
     margin-left: auto;
 }
 
-.input-area {
-    display: flex;
+/* Voice Capture UI */
+.voice-area {
     background: white;
-    padding: 20px;
-    gap: 10px;
+    padding: 30px;
     border-radius: 0 0 15px 15px;
+    text-align: center;
+    border-top: 1px solid #e8f0f7;
 }
 
-.input-area input {
-    flex: 1;
-    padding: 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.input-area button {
-    padding: 14px 25px;
+.mic-btn {
     background: #123c69;
     color: white;
+    font-size: 1.2rem;
+    padding: 20px 40px;
     border: none;
-    border-radius: 8px;
+    border-radius: 50px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.mic-btn:hover {
+    background: #0d2b4d;
+}
+
+/* The glowing animation when recording is active */
+.mic-btn.recording {
+    background: #d9381e;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(217, 56, 30, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(217, 56, 30, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(217, 56, 30, 0); }
+}
+
+.status-text {
+    margin-top: 15px;
+    color: #475569;
+    font-style: italic;
 }

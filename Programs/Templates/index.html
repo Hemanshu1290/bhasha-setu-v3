@@ -64,24 +64,20 @@
         </div>
 
 
-        <div class="input-area">
-
-            <input
-                type="text"
-                id="question"
-                placeholder="Ask your government service question..."
-                onkeypress="handleKey(event)"
-            >
-
-            <button onclick="askAI()">
-                Ask
+       <!-- New Ambient Voice UI -->
+        <div class="voice-area">
+            <button id="micButton" class="mic-btn" onclick="toggleRecording()">
+                🎤 Tap to Speak Field Notes
             </button>
-
+            <p id="recordingStatus" class="status-text">Ready to record...</p>
+            
+            <!-- Hidden text input to hold the transcript before sending -->
+            <input type="hidden" id="question">
         </div>
 
     </div>
 
-    <script src="/static/script.js"></script>
+    <script src="/static/script.js?v=2"></script>
 
 </body>
 
