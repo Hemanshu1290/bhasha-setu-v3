@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bhasha Setu v3</title>
+<style>
+:root{
+  --b:#2457d6;--b2:#7c3aed;--ink:#16213a;--muted:#667085;--line:#e5e7eb;
+  --success:#15803d;--warn:#f59e0b;--error:#dc2626;--light:#f8fafc
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#eef4ff,#fff7ed)}
+.wrap{max-width:1200px;margin:auto;padding:20px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--b),var(--b2));display:grid;place-items:center;color:white;font-weight:900;font-size:20px}
+.brand h1{margin:0;font-size:26px;font-weight:700;display:flex;align-items:center;gap:8px}
+.brand p{color:var(--muted);font-size:13px;margin:4px 0 0}
+.ai-badge{font-size:10px;padding:2px 8px;border-radius:20px;background:#dcfce7;color:var(--success);font-weight:700}
+.ai-badge.off{background:#f1f5f9;color:var(--muted)}
+.top-stats{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:6px;border-bottom:2px solid var(--line);margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:9px 16px;border:none;background:none;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;transition:.2s;font-size:14px}
+.tab.active{color:var(--b);border-bottom-color:var(--b)}
+.tab:hover{color:var(--b)}
+.card{background:#fffffff2;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 4px 12px #1e3a8a08}
+.card h2{margin:0 0 6px;font-size:18px;font-weight:700}
+.card .sub{font-size:13px;color:var(--muted);margin:0 0 14px}
+.tabs-content{display:none}
+.tabs-content.active{display:block}
+
+/* CHAT */
+.chat{height:420px;overflow-y:auto;background:var(--light);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
+.msg{max-width:80%;padding:12px 14px;border-radius:12px;margin:8px 0;font-size:14px;line-height:1.4;white-space:pre-line}
+.user{margin-left:auto;background:#e2ebff;text-align:right}
+.bot{background:#fff;border:1px solid var(--line)}
+.meta{font-size:11px;color:var(--muted);margin-top:4px}
+.composer{display:flex;gap:8px}
+.composer textarea{flex:1;min-height:48px;resize:none;border:1px solid #cbd5e1;border-radius:10px;padding:10px;font:inherit}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;transition:.2s}
+.send{background:var(--b);color:white}
+.send:hover{background:#1a3fa0}
+.mic{width:48px;padding:0;background:white;border:1px solid #ccd6ee;font-size:18px}
+.mic.live{background:#fecaca;animation:pulse .6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.7)}70%{box-shadow:0 0 0 8px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+.status{min-height:18px;font-size:12px;color:var(--muted);margin:8px 0}
+.confirm{display:none;margin-top:12px;padding:14px;border:2px solid var(--warn);background:#fffbf0;border-radius:12px}
+.confirm.show{display:block}
+.confirm b{display:block;margin-bottom:8px;font-size:14px}
+.confirm-body{background:white;padding:10px;border-radius:8px;margin:8px 0;font-size:13px}
+.yes,.no{padding:8px 14px;border:0;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px}
+.yes{background:var(--success);color:white;margin-right:6px}
+.no{background:#e5e7eb}
+.yes:hover{background:#117a2d}
+.no:hover{background:#d1d5db}
+.insert-type{padding:8px 10px;border-radius:8px;margin-bottom:8px;font-size:12px;font-weight:700}
+.insert-type.insert{background:#fef3c7;color:#92400e}
+.insert-type.apply{background:#dbeafe;color:#1e40af}
+.json{background:#0f172a;color:#dbeafe;padding:10px;border-radius:8px;font:11px/1.4 monospace;max-height:180px;overflow:auto;margin-top:14px}
+
+/* SEARCH / CITIZENS */
+.search-panel{display:flex;gap:8px;margin-bottom:14px}
+.search-input{flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;font-size:13px}
+.citizen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.citizen-card{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--light)}
+.citizen-card .name{font-weight:700;color:var(--b);font-size:15px;margin-bottom:6px}
+.citizen-card .row{font-size:12px;color:var(--muted);margin:3px 0}
+.citizen-card .row b{color:var(--ink)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;margin-left:4px}
+.badge.yes{background:#dcfce7;color:var(--success)}
+.badge.no{background:#fee2e2;color:var(--error)}
+.empty-state{text-align:center;padding:40px;color:var(--muted)}
+
+/* PIPELINE */
+.pipeline-steps{display:grid;gap:12px;margin-top:16px}
+.pipeline-step{display:flex;gap:14px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--light)}
+.pipeline-num{width:32px;height:32px;border-radius:50%;background:var(--b);color:white;display:grid;place-items:center;font-weight:800;flex-shrink:0}
+.pipeline-step h3{margin:0 0 4px;font-size:15px}
+.pipeline-step p{margin:0;font-size:13px;color:var(--muted)}
+.ai-info{margin-top:20px;padding:16px;border-radius:12px;border:1px solid var(--line)}
+.ai-info.on{background:#dcfce7;border-color:#86efac}
+.ai-info.off{background:#f1f5f9}
+
+/* LOGS */
+.updates-log{max-height:420px;overflow-y:auto;font-size:12px}
+.log-item{padding:10px;border-bottom:1px solid var(--line)}
+.log-timestamp{color:var(--muted);font-size:11px}
+
+@media(max-width:800px){.top{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">भा</div>
+      <div>
+        <h1>Bhasha Setu v3 <span id="aiBadge" class="ai-badge off">AI: checking…</span></h1>
+        <p>Multilingual citizen support with voice input</p>
+      </div>
+    </div>
+    <div class="top-stats">
+      <b>Citizens:</b> <span id="citizens">—</span> · 
+      <b>Apps:</b> <span id="apps">—</span> · 
+      <b>Updates:</b> <span id="updates">—</span>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="chat" onclick="switchTab('chat',this)">💬 Chat</button>
+    <button class="tab" data-tab="search" onclick="switchTab('search',this)">👥 Citizens</button>
+    <button class="tab" data-tab="pipeline" onclick="switchTab('pipeline',this)">⚙️ How it works</button>
+    <button class="tab" data-tab="logs" onclick="switchTab('logs',this)">📜 Activity Log</button>
+  </div>
+
+  <!-- CHAT TAB -->
+  <div id="chat" class="tabs-content active">
+    <div class="card">
+      <h2>Ask in Your Language</h2>
+      <p class="sub">Speak or type in Hindi, Tamil, Telugu, English, or Romanized Hindi</p>
+      <div id="chatBox" class="chat">
+        <div class="msg bot">
+          नमस्ते! अपने अनुरोध बताएं | Tell me your request | உங்கள் கோரிக்கையைச் சொல்லுங்கள்
+          <div class="meta">Assistant</div>
+        </div>
+      </div>
+      <div class="composer">
+        <button id="mic" class="btn mic">🎙️</button>
+        <textarea id="input" placeholder="Ask anything... (Mera naam... | My name...)"></textarea>
+        <button id="send" class="btn send">Send</button>
+      </div>
+      <div id="status" class="status"></div>
+      <div id="confirmBox" class="confirm">
+        <div id="confirmType" class="insert-type" style="display:none"></div>
+        <b id="confirmTitle">Review</b>
+        <div id="confirmBody" class="confirm-body"></div>
+        <button id="confirmYes" class="yes">✓ Confirm</button>
+        <button id="confirmNo" class="no">✕ Cancel</button>
+      </div>
+      <h3 style="font-size:13px;margin-top:16px;margin-bottom:6px">Latest structured JSON</h3>
+      <pre id="json" class="json">Waiting…</pre>
+    </div>
+  </div>
+
+  <!-- SEARCH / CITIZENS TAB -->
+  <div id="search" class="tabs-content">
+    <div class="card">
+      <h2>Citizens Database</h2>
+      <p class="sub">Browse all citizens or search by name / mobile number</p>
+      <div class="search-panel">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by name or mobile...">
+        <button class="btn send" onclick="doSearch()">Search</button>
+        <button class="btn no" onclick="loadAllCitizens()">Show All</button>
+      </div>
+      <div id="citizenGrid" class="citizen-grid">
+        <div class="empty-state">Loading citizens…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE TAB -->
+  <div id="pipeline" class="tabs-content">
+    <div class="card">
+      <h2>How Bhasha Setu Works</h2>
+      <p class="sub">AI proposes structured JSON; the backend validates and performs the write — nothing changes in the spreadsheet without your confirmation.</p>
+      <div class="pipeline-steps">
+        <div class="pipeline-step">
+          <div class="pipeline-num">1</div>
+          <div><h3>Speech-to-text</h3><p>Browser voice recognition or typed input, in Hindi, Tamil, Telugu, or English.</p></div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">2</div>
+          <div><h3>Intent + entity extraction</h3><p>Text is converted into structured JSON (name, mobile, city, intent, scheme) — never edited directly into Excel.</p></div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">3</div>
+          <div><h3>Validation + matching</h3><p>The backend looks for an existing citizen before proposing any change, or prepares a new-citizen insert.</p></div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">4</div>
+          <div><h3>Confirmation + audit</h3><p>Every insert, update, or scheme application requires your explicit "Confirm" click and is logged to Updates_Log.</p></div>
+        </div>
+      </div>
+      <div id="aiInfoBox" class="ai-info off">
+        <b>AI extraction: <span id="aiStatusText">checking…</span></b>
+        <p style="margin:8px 0 0;font-size:13px" id="aiStatusDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGS TAB -->
+  <div id="logs" class="tabs-content">
+    <div class="card">
+      <h2>Recent Activity</h2>
+      <p class="sub">Every insert, update, and scheme application is logged automatically</p>
+      <div id="logsBox" class="updates-log">
+        <div class="empty-state">Loading…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API='http://127.0.0.1:8000';
+const input=document.querySelector('#input');
+const chatBox=document.querySelector('#chatBox');
+const statusEl=document.querySelector('#status');
+const json=document.querySelector('#json');
+const confirmBox=document.querySelector('#confirmBox');
+const confirmType=document.querySelector('#confirmType');
+const confirmTitle=document.querySelector('#confirmTitle');
+const confirmBody=document.querySelector('#confirmBody');
+
+let pending=null;
+let pendingType=null;
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tabs-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  btn.classList.add('active');
+  if(tab==='logs') loadLogs();
+  if(tab==='search') loadAllCitizens();
+}
+
+function add(text, sender='bot') {
+  const d=document.createElement('div');
+  d.className='msg '+sender;
+  d.textContent=text;
+  const m=document.createElement('div');
+  m.className='meta';
+  m.textContent=sender==='user'?'You':'Bhasha Setu';
+  d.appendChild(m);
+  chatBox.appendChild(d);
+  chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+async function stats() {
+  try {
+    const x=await(await fetch(API+'/api/stats')).json();
+    document.getElementById('citizens').textContent=x.citizens;
+    document.getElementById('apps').textContent=x.applications;
+    document.getElementById('updates').textContent=x.updates;
+    setAiBadge(x.ai_enabled);
+  }catch(e){
+    setAiBadge(false, true);
+  }
+}
+
+function setAiBadge(enabled, unreachable) {
+  const badge=document.getElementById('aiBadge');
+  const infoBox=document.getElementById('aiInfoBox');
+  const statusText=document.getElementById('aiStatusText');
+  const statusDesc=document.getElementById('aiStatusDesc');
+  if(unreachable) {
+    badge.textContent='AI: backend offline';
+    badge.className='ai-badge off';
+    return;
+  }
+  if(enabled) {
+    badge.textContent='AI: ON';
+    badge.className='ai-badge';
+    infoBox.className='ai-info on';
+    statusText.textContent='Enabled (Groq)';
+    statusDesc.textContent='The server has a GROQ_API_KEY set, so extraction and general scheme questions are answered by a real LLM instead of the regex fallback.';
+  } else {
+    badge.textContent='AI: OFF (regex mode)';
+    badge.className='ai-badge off';
+    infoBox.className='ai-info off';
+    statusText.textContent='Disabled — using deterministic regex extractor';
+    statusDesc.textContent='No GROQ_API_KEY is set on the server. See README_AI.md for how to get a free key and enable real AI understanding.';
+  }
+}
+
+async function submit() {
+  const text=input.value.trim();
+  if(!text) return;
+  add(text,'user');
+  input.value='';
+  statusEl.textContent='Understanding…';
+  try {
+    const r=await fetch(API+'/api/understand',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({text})
+    });
+    const x=await r.json();
+    if(!r.ok) throw Error(x.detail||'Request failed');
+    json.textContent=JSON.stringify(x.structured,null,2);
+
+    if(x.pending_action) {
+      pending=x.pending_action; pendingType='update';
+      confirmType.style.display='none';
+      confirmTitle.textContent='Review Update';
+      confirmBody.textContent=pending.preview;
+      confirmBox.classList.add('show');
+      add('Found matching citizen. Please review the proposed changes.');
+    } else if(x.pending_insert) {
+      pending=x.pending_insert; pendingType='insert';
+      confirmType.textContent='✓ Adding NEW citizen';
+      confirmType.className='insert-type insert';
+      confirmType.style.display='block';
+      confirmTitle.textContent='Add New Citizen?';
+      confirmBody.textContent=pending.preview;
+      confirmBox.classList.add('show');
+      add('This looks like a new citizen. Please review before adding.');
+    } else if(x.pending_apply) {
+      pending=x.pending_apply; pendingType='apply';
+      confirmType.textContent='📋 Scheme application';
+      confirmType.className='insert-type apply';
+      confirmType.style.display='block';
+      confirmTitle.textContent='Apply for scheme?';
+      confirmBody.textContent=pending.preview;
+      confirmBox.classList.add('show');
+      add('Ready to apply. Please review and confirm.');
+    } else {
+      pending=null; pendingType=null;
+      confirmBox.classList.remove('show');
+      add(x.reply);
+    }
+    statusEl.textContent='';
+    stats();
+  } catch(e) {
+    statusEl.textContent=e.message;
+    add('Backend error. Check connection.');
+  }
+}
+
+document.getElementById('send').onclick=submit;
+input.onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); submit(); } };
+
+document.getElementById('confirmYes').onclick=async()=>{
+  if(!pending) return;
+  const endpoint = pendingType==='insert' ? '/api/confirm_insert'
+                  : pendingType==='apply'  ? '/api/confirm_apply'
+                  : '/api/confirm';
+  try {
+    const x=await(await fetch(API+endpoint,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(pending)
+    })).json();
+    confirmBox.classList.remove('show');
+    pending=null; pendingType=null;
+    add(x.reply||'Confirmed successfully');
+    stats();
+  } catch(e) {
+    add('Confirm failed: '+e.message);
+  }
+};
+
+document.getElementById('confirmNo').onclick=()=>{
+  pending=null; pendingType=null;
+  confirmBox.classList.remove('show');
+  add('Cancelled. No changes made.');
+};
+
+function renderCitizens(list) {
+  const grid=document.getElementById('citizenGrid');
+  if(!list || list.length===0) {
+    grid.innerHTML='<div class="empty-state">No citizens found</div>';
+    return;
+  }
+  grid.innerHTML=list.map(c=>`
+    <div class="citizen-card">
+      <div class="name">${c.Name||'—'}</div>
+      <div class="row"><b>ID:</b> ${c.Citizen_ID||'—'}</div>
+      <div class="row"><b>Mobile:</b> ${c.Mobile||'—'}</div>
+      <div class="row"><b>City:</b> ${c.City||'—'} ${c.State?('· '+c.State):''}</div>
+      <div class="row"><b>Address:</b> ${c.Address||'—'}</div>
+      <div class="row">Ration card: <span class="badge ${c.Has_Ration_Card?'yes':'no'}">${c.Has_Ration_Card?'Yes':'No'}</span></div>
+    </div>
+  `).join('');
+}
+
+async function loadAllCitizens() {
+  try {
+    const x=await(await fetch(API+'/api/citizens')).json();
+    renderCitizens(x.data);
+  } catch(e) {
+    document.getElementById('citizenGrid').innerHTML='<div class="empty-state">Could not load citizens — is the backend running?</div>';
+  }
+}
+
+async function doSearch() {
+  const q=document.getElementById('searchInput').value.trim();
+  if(!q) { loadAllCitizens(); return; }
+  try {
+    const x=await(await fetch(API+'/api/search',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({query:q})
+    })).json();
+    renderCitizens(x.results);
+  } catch(e) {
+    document.getElementById('citizenGrid').innerHTML='<div class="empty-state">Search failed</div>';
+  }
+}
+
+async function loadLogs() {
+  try {
+    const x=await(await fetch(API+'/api/logs')).json();
+    const box=document.getElementById('logsBox');
+    const updates=x.updates||[];
+    if(updates.length===0) {
+      box.innerHTML='<div class="empty-state">No updates yet</div>';
+      return;
+    }
+    box.innerHTML=updates.slice(-30).reverse().map(u=>`
+      <div class="log-item">
+        <div class="log-timestamp">${new Date(u.Timestamp).toLocaleString()}</div>
+        <b>${u.Citizen_ID}</b>: ${u.Field}
+        <div class="meta">${u['Old Value'] || '—'} → ${u['New Value'] || '—'}</div>
+      </div>
+    `).join('');
+  } catch(e) { console.log(e); }
+}
+
+// Speech recognition
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR) {
+  const rec=new SR();
+  rec.lang='hi-IN';
+  rec.onstart=()=>{ document.getElementById('mic').classList.add('live'); statusEl.textContent='Listening…'; };
+  rec.onend=()=>document.getElementById('mic').classList.remove('live');
+  rec.onresult=e=>{ input.value=e.results[0][0].transcript; submit(); };
+  document.getElementById('mic').onclick=()=>
+    document.getElementById('mic').classList.contains('live')?rec.stop():rec.start();
+} else {
+  document.getElementById('mic').disabled=true;
+}
+
+stats();
+loadAllCitizens();
+</script>
+</body>
+</html>
