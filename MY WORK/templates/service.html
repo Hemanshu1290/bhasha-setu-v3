@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Government Service</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+
+        <h1>🇮🇳 Government Service Navigator</h1>
+
+    </header>
+
+
+    <div class="service-page">
+
+        <h2>{{ service.name }}</h2>
+
+        <p>{{ service.description }}</p>
+
+
+        <h3>Eligibility</h3>
+
+        <p>{{ service.eligibility }}</p>
+
+
+        <h3>Required Documents</h3>
+
+        <ul>
+
+            {% for document in service.documents %}
+
+            <li>{{ document }}</li>
+
+            {% endfor %}
+
+        </ul>
+
+
+        <h3>How to Apply</h3>
+
+        <ol>
+
+            {% for step in service.procedure %}
+
+            <li>{{ step }}</li>
+
+            {% endfor %}
+
+        </ol>
+
+
+        <h3>Official Website</h3>
+
+        <a href="{{ service.official_url }}"
+           target="_blank">
+
+            Visit Official Website
+
+        </a>
+
+
+        <br><br>
+
+        <a href="/">
+            ← Back to Government Services
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

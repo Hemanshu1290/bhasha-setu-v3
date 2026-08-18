@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Government Service Navigator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🇮🇳
+        </div>
+
+        <div>
+
+            <h1>
+                Government Service Navigator
+            </h1>
+
+            <p>
+                Your intelligent guide to government services
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <!-- LANGUAGE -->
+
+        <div class="language-box">
+
+            🌐
+
+            <select id="language">
+
+                <option value="English">
+                    English
+                </option>
+
+                <option value="Tamil">
+                    தமிழ்
+                </option>
+
+                <option value="Hindi">
+                    हिन्दी
+                </option>
+
+                <option value="Telugu">
+                    తెలుగు
+                </option>
+
+                <option value="Kannada">
+                    ಕನ್ನಡ
+                </option>
+
+                <option value="Malayalam">
+                    മലയാളം
+                </option>
+
+                <option value="Bengali">
+                    বাংলা
+                </option>
+
+                <option value="Marathi">
+                    मराठी
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- STATE -->
+
+        <div class="language-box">
+
+            📍
+
+            <select id="state">
+
+                <option value="All India">
+                    All India
+                </option>
+
+                <option value="Tamil Nadu">
+                    Tamil Nadu
+                </option>
+
+                <option value="Karnataka">
+                    Karnataka
+                </option>
+
+                <option value="Kerala">
+                    Kerala
+                </option>
+
+                <option value="Andhra Pradesh">
+                    Andhra Pradesh
+                </option>
+
+                <option value="Telangana">
+                    Telangana
+                </option>
+
+                <option value="Maharashtra">
+                    Maharashtra
+                </option>
+
+                <option value="West Bengal">
+                    West Bengal
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- VOICE -->
+
+        <button class="header-button"
+                onclick="startVoice()">
+
+            🎤 Speak
+
+        </button>
+
+
+        <!-- AI -->
+
+        <button class="header-ai"
+                onclick="document.getElementById('question').focus()">
+
+            ✨ Ask AI
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main-container">
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-badge">
+
+            ✨ AI-POWERED GOVERNMENT ASSISTANCE
+
+        </div>
+
+
+        <h2>
+
+            How can we help you
+            <span>today?</span> 👋
+
+        </h2>
+
+
+        <p class="hero-subtitle">
+
+            Tell us what you need in your own words.
+            We'll help you find the right government service.
+
+        </p>
+
+
+        <!-- SMART SEARCH -->
+
+        <div class="smart-search">
+
+            <div class="search-icon">
+                🔎
+            </div>
+
+
+            <input
+
+                type="text"
+
+                id="question"
+
+                placeholder="Example: I need a driving licence..."
+
+                onkeydown="if(event.key === 'Enter') askAI()"
+
+            >
+
+
+            <!-- MICROPHONE -->
+
+            <button
+                class="microphone-button"
+                onclick="startVoice()">
+
+                🎤
+
+            </button>
+
+
+            <!-- FIND SERVICE -->
+
+            <button
+                class="find-button"
+                onclick="askAI()">
+
+                Find Service
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+            <!-- MUTE -->
+
+            <button
+                class="voice-stop-button"
+                onclick="stopSpeaking()">
+
+                🔇 Mute
+
+            </button>
+
+        </div>
+
+
+        <!-- VOICE STATUS -->
+
+        <p id="voiceStatus"
+           class="voice-status">
+
+        </p>
+
+
+        <!-- =================================================
+             POPULAR SERVICES
+        ================================================== -->
+
+        <div class="popular">
+
+            <span>
+                Popular:
+            </span>
+
+
+            <a href="/service/pan_card">
+                PAN Card
+            </a>
+
+
+            <a href="/service/voter_id">
+                Voter ID
+            </a>
+
+
+            <a href="/service/passport">
+                Passport
+            </a>
+
+
+            <a href="/service/driving_license">
+                Driving Licence
+            </a>
+
+
+            <a href="/service/education_loan">
+                Education Loan
+            </a>
+
+
+            <a href="/service/scholarship">
+                Scholarship
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SERVICE CATEGORIES
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="small-label">
+                    EXPLORE
+                </span>
+
+                <h3>
+                    What are you looking for?
+                </h3>
+
+            </div>
+
+
+            <span class="service-count">
+                15+ services available
+            </span>
+
+        </div>
+
+
+
+        <div class="category-grid">
+
+
+            <!-- IDENTITY -->
+
+            <a href="/service/pan_card"
+               class="category-card">
+
+                <div class="category-icon blue">
+                    🪪
+                </div>
+
+                <h4>
+                    Identity & Documents
+                </h4>
+
+                <p>
+                    PAN • Voter ID • Passport • Certificates
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- TRANSPORT -->
+
+            <a href="/service/driving_license"
+               class="category-card">
+
+                <div class="category-icon purple">
+                    🚗
+                </div>
+
+                <h4>
+                    Driving & Transport
+                </h4>
+
+                <p>
+                    Driving Licence • Learner Licence • RC
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- CERTIFICATES -->
+
+            <a href="/service/birth_certificate"
+               class="category-card">
+
+                <div class="category-icon orange">
+                    📜
+                </div>
+
+                <h4>
+                    Certificates
+                </h4>
+
+                <p>
+                    Birth • Income • Residence • Other certificates
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- LOANS -->
+
+            <a href="/service/education_loan"
+               class="category-card">
+
+                <div class="category-icon green">
+                    💰
+                </div>
+
+                <h4>
+                    Loans & Finance
+                </h4>
+
+                <p>
+                    Education • Business • MSME • Financial assistance
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- EDUCATION -->
+
+            <a href="/service/scholarship"
+               class="category-card">
+
+                <div class="category-icon cyan">
+                    🎓
+                </div>
+
+                <h4>
+                    Education
+                </h4>
+
+                <p>
+                    Scholarships • Student support • Education schemes
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- HEALTH -->
+
+            <a href="/service/health_scheme"
+               class="category-card">
+
+                <div class="category-icon pink">
+                    🏥
+                </div>
+
+                <h4>
+                    Healthcare
+                </h4>
+
+                <p>
+                    Health schemes • Medical assistance • Benefits
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- AGRICULTURE -->
+
+            <a href="/service/farmer_scheme"
+               class="category-card">
+
+                <div class="category-icon green">
+                    🌾
+                </div>
+
+                <h4>
+                    Agriculture
+                </h4>
+
+                <p>
+                    Farmer schemes • Subsidies • Agricultural support
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- WELFARE -->
+
+            <a href="/service/business_loan"
+               class="category-card">
+
+                <div class="category-icon purple">
+                    ❤️
+                </div>
+
+                <h4>
+                    Welfare & Schemes
+                </h4>
+
+                <p>
+                    Government benefits • Welfare • Financial support
+                </p>
+
+                <span class="card-arrow">
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         AI NAVIGATOR
+    ====================================================== -->
+
+    <section class="navigator-section">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="navigator-intro">
+
+            <div class="ai-orb">
+                ✨
+            </div>
+
+
+            <span class="small-label">
+                SMART NAVIGATION
+            </span>
+
+
+            <h3>
+                You don't need to know
+                the service name.
+            </h3>
+
+
+            <p>
+
+                Simply describe your problem in
+                everyday language. Our AI will identify
+                the government service that may help you.
+
+            </p>
+
+
+            <div class="example-question">
+
+                <span>
+                    💡
+                </span>
+
+                <div>
+
+                    <strong>
+                        Try saying:
+                    </strong>
+
+                    <p>
+                        "I need money to pay for my college."
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                onclick="document.getElementById('question').focus()">
+
+                ✨ Find My Service
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="suggestion-panel">
+
+            <div class="panel-top">
+
+                <div>
+
+                    <span class="ai-label">
+                        ✨ AI NAVIGATOR
+                    </span>
+
+                    <h4>
+                        Service identification
+                    </h4>
+
+                </div>
+
+
+                <div class="online">
+
+                    <span></span>
+
+                    AI Ready
+
+                </div>
+
+            </div>
+
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+                <h4>
+                    Tell us what you need
+                </h4>
+
+                <p>
+                    Your suggested government service
+                    will appear here.
+                </p>
+
+            </div>
+
+
+            <!-- AI RESULT -->
+
+            <div id="chatBox"
+                 class="chat-result">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         QUICK ACCESS
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="small-label">
+                    QUICK ACCESS
+                </span>
+
+                <h3>
+                    Popular Government Services
+                </h3>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="quick-grid">
+
+
+            <!-- PAN -->
+
+            <a href="/service/pan_card"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🪪
+                </span>
+
+                <div>
+
+                    <strong>
+                        PAN Card
+                    </strong>
+
+                    <small>
+                        Identity & tax
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- VOTER -->
+
+            <a href="/service/voter_id"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🗳️
+                </span>
+
+                <div>
+
+                    <strong>
+                        Voter ID
+                    </strong>
+
+                    <small>
+                        Election services
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- PASSPORT -->
+
+            <a href="/service/passport"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🛂
+                </span>
+
+                <div>
+
+                    <strong>
+                        Passport
+                    </strong>
+
+                    <small>
+                        Travel document
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- DRIVING LICENCE -->
+
+            <a href="/service/driving_license"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🚗
+                </span>
+
+                <div>
+
+                    <strong>
+                        Driving Licence
+                    </strong>
+
+                    <small>
+                        Driving & transport
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- EDUCATION LOAN -->
+
+            <a href="/service/education_loan"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🎓
+                </span>
+
+                <div>
+
+                    <strong>
+                        Education Loan
+                    </strong>
+
+                    <small>
+                        Student finance
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- BUSINESS LOAN -->
+
+            <a href="/service/business_loan"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    💼
+                </span>
+
+                <div>
+
+                    <strong>
+                        Business Loan
+                    </strong>
+
+                    <small>
+                        Business & MSME
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- SCHOLARSHIP -->
+
+            <a href="/service/scholarship"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🎓
+                </span>
+
+                <div>
+
+                    <strong>
+                        Scholarships
+                    </strong>
+
+                    <small>
+                        Education support
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+
+
+            <!-- FARMER -->
+
+            <a href="/service/farmer_scheme"
+               class="quick-card">
+
+                <span class="quick-icon">
+                    🌾
+                </span>
+
+                <div>
+
+                    <strong>
+                        Farmer Schemes
+                    </strong>
+
+                    <small>
+                        Agriculture support
+                    </small>
+
+                </div>
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WHY USE THIS
+    ====================================================== -->
+
+    <section class="trust-section">
+
+        <div class="trust-header">
+
+            <span class="small-label">
+                BUILT FOR CITIZENS
+            </span>
+
+            <h3>
+                Government services,
+                made simpler.
+            </h3>
+
+        </div>
+
+
+
+        <div class="trust-grid">
+
+
+            <div class="trust-card">
+
+                <div>
+                    🎯
+                </div>
+
+                <h4>
+                    Smart Service Discovery
+                </h4>
+
+                <p>
+                    Describe your problem in your own
+                    words and let AI identify the relevant
+                    government service.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    🌐
+                </div>
+
+                <h4>
+                    Multilingual
+                </h4>
+
+                <p>
+                    Get assistance in English, Tamil,
+                    Hindi and other supported Indian
+                    languages.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    🎤
+                </div>
+
+                <h4>
+                    Voice Enabled
+                </h4>
+
+                <p>
+                    Speak your question instead of
+                    typing it.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    📍
+                </div>
+
+                <h4>
+                    State Aware
+                </h4>
+
+                <p>
+                    Select your state to receive guidance
+                    relevant to your location.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    🛡️
+                </div>
+
+                <h4>
+                    Privacy First
+                </h4>
+
+                <p>
+                    Never share OTPs, passwords, PINs
+                    or sensitive information.
+                </p>
+
+            </div>
+
+
+
+            <div class="trust-card">
+
+                <div>
+                    🔗
+                </div>
+
+                <h4>
+                    Official Portals
+                </h4>
+
+                <p>
+                    Get directed to the appropriate
+                    official government website.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SAFETY
+    ====================================================== -->
+
+    <section class="safety-banner">
+
+        <div class="safety-icon">
+            🛡️
+        </div>
+
+
+        <div>
+
+            <strong>
+                Your safety comes first.
+            </strong>
+
+            <p>
+                We will never ask you for an OTP,
+                password, bank PIN or card details.
+            </p>
+
+        </div>
+
+
+        <span class="shield">
+            ✓
+        </span>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div>
+
+        <strong>
+            🇮🇳 Government Service Navigator
+        </strong>
+
+        <p>
+            Making government services easier
+            to understand and access.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="https://www.india.gov.in/"
+           target="_blank">
+
+            India.gov.in
+
+        </a>
+
+        <span>
+            •
+        </span>
+
+        <a href="#">
+            Help
+        </a>
+
+        <span>
+            •
+        </span>
+
+        <a href="#">
+            Privacy
+        </a>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='script.js') }}">
+</script>
+
+
+</body>
+
+</html>
