@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Government Service Navigator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* =====================================================
+           INITIAL LANGUAGE SELECTION PAGE
+        ===================================================== */
+
+        #languageSelectionPage {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef5ff,
+                    #ffffff,
+                    #eefaf4
+                );
+
+            padding: 20px;
+        }
+
+        .language-selection-card {
+            width: 100%;
+            max-width: 650px;
+
+            background: white;
+            padding: 45px;
+
+            border-radius: 24px;
+
+            text-align: center;
+
+            box-shadow:
+                0 25px 70px
+                rgba(20, 50, 90, 0.15);
+        }
+
+        .language-india-icon {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .language-selection-card h1 {
+            margin: 0;
+            color: #173866;
+            font-size: 30px;
+        }
+
+        .language-selection-card .language-subtitle {
+            margin-top: 10px;
+            margin-bottom: 30px;
+            color: #667085;
+            font-size: 15px;
+        }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .language-choice {
+            border: 2px solid #e4eaf2;
+            background: #f8fafc;
+
+            border-radius: 14px;
+            padding: 18px 12px;
+
+            cursor: pointer;
+
+            font-size: 17px;
+            font-weight: 700;
+            color: #173866;
+
+            transition: 0.2s ease;
+        }
+
+        .language-choice:hover {
+            border-color: #356ae6;
+            background: #eff5ff;
+            transform: translateY(-2px);
+        }
+
+        .language-choice .native-name {
+            display: block;
+            font-size: 19px;
+            margin-bottom: 4px;
+        }
+
+        .language-choice .english-name {
+            display: block;
+            font-size: 12px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        /* Main website hidden initially */
+
+        #mainWebsite {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+
+            .language-selection-card {
+                padding: 30px 20px;
+            }
+
+            .language-selection-card h1 {
+                font-size: 24px;
+            }
+
+            .language-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     INITIAL LANGUAGE SELECTION PAGE
+===================================================== -->
+
+<div id="languageSelectionPage">
+
+    <div class="language-selection-card">
+
+        <div class="language-india-icon">
+            🇮🇳
+        </div>
+
+        <h1>
+            Government Service Navigator
+        </h1>
+
+        <p class="language-subtitle">
+            Select your preferred language
+        </p>
+
+        <div class="language-grid">
+
+            <button
+                type="button"
+                class="language-choice"
+                onclick="selectInitialLanguage('English')">
+
+                <span class="native-name">
+                    English
+                </span>
+
+                <span class="english-name">
+                    English
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="language-choice"
+                onclick="selectInitialLanguage('Tamil')">
+
+                <span class="native-name">
+                    தமிழ்
+                </span>
+
+                <span class="english-name">
+                    Tamil
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="language-choice"
+                onclick="selectInitialLanguage('Hindi')">
+
+                <span class="native-name">
+                    हिन्दी
+                </span>
+
+                <span class="english-name">
+                    Hindi
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="language-choice"
+                onclick="selectInitialLanguage('Telugu')">
+
+                <span class="native-name">
+                    తెలుగు
+                </span>
+
+                <span class="english-name">
+                    Telugu
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="language-choice"
+                onclick="selectInitialLanguage('Malayalam')">
+
+                <span class="native-name">
+                    മലയാളം
+                </span>
+
+                <span class="english-name">
+                    Malayalam
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="language-choice"
+                onclick="selectInitialLanguage('Marathi')">
+
+                <span class="native-name">
+                    मराठी
+                </span>
+
+                <span class="english-name">
+                    Marathi
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="language-choice"
+                onclick="selectInitialLanguage('Bengali')">
+
+                <span class="native-name">
+                    বাংলা
+                </span>
+
+                <span class="english-name">
+                    Bengali
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN WEBSITE
+===================================================== -->
+
+<div id="mainWebsite">
+
+
+<!-- Animated background -->
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🇮🇳
+        </div>
+
+        <div>
+
+            <h1 id="brandTitle">
+                Government Service Navigator
+            </h1>
+
+            <p id="brandSubtitle">
+                Your intelligent guide to government services
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <div class="language-box">
+
+            🌐
+
+            <select id="language">
+
+                <option value="English">English</option>
+                <option value="Tamil">தமிழ்</option>
+                <option value="Hindi">हिन्दी</option>
+                <option value="Telugu">తెలుగు</option>
+                <option value="Malayalam">മലയാളം</option>
+                <option value="Marathi">मराठी</option>
+                <option value="Bengali">বাংলা</option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="header-button"
+            onclick="startVoice()">
+
+            🎤
+            <span id="speakButtonText">
+                Speak
+            </span>
+
+        </button>
+
+
+        <button
+            class="header-ai"
+            onclick="document.getElementById('question').focus()">
+
+            ✨
+            <span id="askAIButtonText">
+                Ask AI
+            </span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main-container">
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div
+        class="hero-badge"
+        id="heroBadge">
+
+        ✨ AI-POWERED GOVERNMENT ASSISTANCE
+
+    </div>
+
+
+    <h2 id="heroHeading">
+
+        How can we help you
+        <span id="heroToday">today?</span>
+        👋
+
+    </h2>
+
+
+    <p
+        class="hero-subtitle"
+        id="heroSubtitle">
+
+        Tell us what you need in your own words.
+        We'll help you find the right government service.
+
+    </p>
+
+
+    <!-- SMART SEARCH -->
+
+    <div class="smart-search">
+
+        <div class="search-icon">
+            🔎
+        </div>
+
+
+        <input
+            type="text"
+            id="question"
+            placeholder="Example: I need a certificate showing my income..."
+            onkeydown="if(event.key === 'Enter') askAI()"
+        >
+
+
+        <button
+            class="microphone-button"
+            onclick="startVoice()">
+
+            🎤
+
+        </button>
+
+
+        <button
+            class="find-button"
+            onclick="askAI()">
+
+            <span id="findServiceText">
+                Find Service
+            </span>
+
+            <span>→</span>
+
+        </button>
+
+
+        <button
+            class="voice-stop-button"
+            onclick="stopSpeaking()">
+
+            🔇
+
+            <span id="muteText">
+                Mute
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <p
+        id="voiceStatus"
+        class="voice-status">
+    </p>
+
+
+    <!-- POPULAR -->
+
+    <div class="popular">
+
+        <span id="popularText">
+            Popular:
+        </span>
+
+        <a href="/service/pan_card">
+            PAN Card
+        </a>
+
+        <a href="/service/voter_id">
+            Voter ID
+        </a>
+
+        <a href="/service/passport">
+            Passport
+        </a>
+
+        <a href="/service/income_certificate">
+            Income Certificate
+        </a>
+
+        <a href="/service/birth_certificate">
+            Birth Certificate
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CATEGORIES
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span
+                class="small-label"
+                id="exploreLabel">
+
+                EXPLORE
+
+            </span>
+
+            <h3 id="exploreHeading">
+                What are you looking for?
+            </h3>
+
+        </div>
+
+
+        <span
+            class="service-count"
+            id="serviceCount">
+
+            5+ services available
+
+        </span>
+
+    </div>
+
+
+    <div class="category-grid">
+
+
+        <a
+            href="/service/pan_card"
+            class="category-card">
+
+            <div class="category-icon blue">
+                🪪
+            </div>
+
+            <h4 id="identityTitle">
+                Identity & Documents
+            </h4>
+
+            <p id="identityDescription">
+                PAN • Voter ID • Passport
+            </p>
+
+            <span class="card-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a
+            href="/service/passport"
+            class="category-card">
+
+            <div class="category-icon green">
+                ✈️
+            </div>
+
+            <h4 id="travelTitle">
+                Travel & Passport
+            </h4>
+
+            <p id="travelDescription">
+                Passport and travel services
+            </p>
+
+            <span class="card-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a
+            href="/service/birth_certificate"
+            class="category-card">
+
+            <div class="category-icon orange">
+                📜
+            </div>
+
+            <h4 id="certificateTitle">
+                Certificates
+            </h4>
+
+            <p id="certificateDescription">
+                Birth • Income • Other certificates
+            </p>
+
+            <span class="card-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="category-card">
+
+            <div class="category-icon purple">
+                🚗
+            </div>
+
+            <h4 id="licenseTitle">
+                Licences
+            </h4>
+
+            <p id="licenseDescription">
+                Driving and other licences
+            </p>
+
+            <span class="card-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="category-card">
+
+            <div class="category-icon cyan">
+                🚙
+            </div>
+
+            <h4 id="vehicleTitle">
+                Vehicles
+            </h4>
+
+            <p id="vehicleDescription">
+                Registration • RC • Transport
+            </p>
+
+            <span class="card-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="category-card">
+
+            <div class="category-icon pink">
+                ❤️
+            </div>
+
+            <h4 id="welfareTitle">
+                Welfare Schemes
+            </h4>
+
+            <p id="welfareDescription">
+                Benefits and government schemes
+            </p>
+
+            <span class="card-arrow">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     AI NAVIGATOR
+===================================================== -->
+
+<section class="navigator-section">
+
+
+    <div class="navigator-intro">
+
+        <div class="ai-orb">
+            ✨
+        </div>
+
+        <span
+            class="small-label"
+            id="smartNavigation">
+
+            SMART NAVIGATION
+
+        </span>
+
+
+        <h3 id="navigatorHeading">
+            You don't need to know the service name.
+        </h3>
+
+
+        <p id="navigatorDescription">
+
+            Simply describe your problem in everyday language.
+            Our AI will help identify the government service
+            you may need.
+
+        </p>
+
+
+        <div class="example-question">
+
+            <span>💡</span>
+
+            <div>
+
+                <strong id="trySaying">
+                    Try saying:
+                </strong>
+
+                <p id="exampleQuestion">
+                    "I need a document to prove my income."
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="primary-button"
+            onclick="document.getElementById('question').focus()">
+
+            ✨
+
+            <span id="findMyService">
+                Find My Service
+            </span>
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+
+    <div class="suggestion-panel">
+
+        <div class="panel-top">
+
+            <div>
+
+                <span
+                    class="ai-label"
+                    id="aiNavigator">
+
+                    ✨ AI NAVIGATOR
+
+                </span>
+
+                <h4 id="serviceIdentification">
+                    Service identification
+                </h4>
+
+            </div>
+
+
+            <div class="online">
+
+                <span></span>
+
+                <span id="aiReady">
+                    AI Ready
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                🔎
+            </div>
+
+            <h4 id="emptyHeading">
+                Tell us what you need
+            </h4>
+
+            <p id="emptyDescription">
+                Your suggested government service
+                will appear here.
+            </p>
+
+        </div>
+
+
+        <div
+            id="chatBox"
+            class="chat-result">
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     QUICK SERVICES
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span
+                class="small-label"
+                id="quickAccessLabel">
+
+                QUICK ACCESS
+
+            </span>
+
+            <h3 id="popularServicesHeading">
+                Popular Government Services
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="quick-grid">
+
+
+        <a
+            href="/service/pan_card"
+            class="quick-card">
+
+            <span class="quick-icon">
+                🪪
+            </span>
+
+            <div>
+
+                <strong id="panTitle">
+                    PAN Card
+                </strong>
+
+                <small id="panDescription">
+                    Identity & tax
+                </small>
+
+            </div>
+
+            <span>→</span>
+
+        </a>
+
+
+        <a
+            href="/service/voter_id"
+            class="quick-card">
+
+            <span class="quick-icon">
+                🗳️
+            </span>
+
+            <div>
+
+                <strong id="voterTitle">
+                    Voter ID
+                </strong>
+
+                <small id="voterDescription">
+                    Election services
+                </small>
+
+            </div>
+
+            <span>→</span>
+
+        </a>
+
+
+        <a
+            href="/service/passport"
+            class="quick-card">
+
+            <span class="quick-icon">
+                🛂
+            </span>
+
+            <div>
+
+                <strong id="passportTitle">
+                    Passport
+                </strong>
+
+                <small id="passportDescription">
+                    Travel document
+                </small>
+
+            </div>
+
+            <span>→</span>
+
+        </a>
+
+
+        <a
+            href="/service/income_certificate"
+            class="quick-card">
+
+            <span class="quick-icon">
+                📄
+            </span>
+
+            <div>
+
+                <strong id="incomeTitle">
+                    Income Certificate
+                </strong>
+
+                <small id="incomeDescription">
+                    Certificates
+                </small>
+
+            </div>
+
+            <span>→</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WHY US
+===================================================== -->
+
+<section class="trust-section">
+
+    <div class="trust-header">
+
+        <span
+            class="small-label"
+            id="builtForCitizens">
+
+            BUILT FOR CITIZENS
+
+        </span>
+
+        <h3 id="simplerHeading">
+            Government services, made simpler.
+        </h3>
+
+    </div>
+
+
+    <div class="trust-grid">
+
+
+        <div class="trust-card">
+
+            <div>🎯</div>
+
+            <h4 id="simpleGuidance">
+                Simple Guidance
+            </h4>
+
+            <p id="simpleGuidanceDescription">
+                Complex government procedures
+                explained in simple language.
+            </p>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div>🌐</div>
+
+            <h4 id="multilingualTitle">
+                Multilingual
+            </h4>
+
+            <p id="multilingualDescription">
+                Access assistance in multiple
+                Indian languages.
+            </p>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div>🎤</div>
+
+            <h4 id="voiceEnabled">
+                Voice Enabled
+            </h4>
+
+            <p id="voiceEnabledDescription">
+                Speak your question instead
+                of typing it.
+            </p>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div>🛡️</div>
+
+            <h4 id="privacyFirst">
+                Privacy First
+            </h4>
+
+            <p id="privacyDescription">
+                Never share OTPs, passwords,
+                PINs or sensitive information.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SAFETY
+===================================================== -->
+
+<section class="safety-banner">
+
+    <div class="safety-icon">
+        🛡️
+    </div>
+
+    <div>
+
+        <strong id="safetyTitle">
+            Your safety comes first.
+        </strong>
+
+        <p id="safetyDescription">
+            We will never ask you for an OTP,
+            password, bank PIN or card details.
+        </p>
+
+    </div>
+
+    <span class="shield">
+        ✓
+    </span>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div>
+
+        <strong id="footerTitle">
+            🇮🇳 Government Service Navigator
+        </strong>
+
+        <p id="footerDescription">
+            Making government services easier
+            to understand and access.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a
+            href="https://www.india.gov.in/"
+            target="_blank">
+
+            India.gov.in
+
+        </a>
+
+        <span>•</span>
+
+        <a href="#">
+            Help
+        </a>
+
+        <span>•</span>
+
+        <a href="#">
+            Privacy
+        </a>
+
+    </div>
+
+</footer>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     TRANSLATIONS
+===================================================== -->
+
+<script>
+
+const translations = {
+
+    English: {
+
+        brandTitle: "Government Service Navigator",
+        brandSubtitle: "Your intelligent guide to government services",
+        heroBadge: "✨ AI-POWERED GOVERNMENT ASSISTANCE",
+        heroHeading: "How can we help you",
+        heroToday: "today?",
+        heroSubtitle: "Tell us what you need in your own words. We'll help you find the right government service.",
+        placeholder: "Example: I need a certificate showing my income...",
+        findService: "Find Service",
+        mute: "Mute",
+        speak: "Speak",
+        askAI: "Ask AI",
+        popular: "Popular:",
+        explore: "EXPLORE",
+        exploreHeading: "What are you looking for?",
+        serviceCount: "5+ services available",
+
+        identityTitle: "Identity & Documents",
+        identityDescription: "PAN • Voter ID • Passport",
+
+        travelTitle: "Travel & Passport",
+        travelDescription: "Passport and travel services",
+
+        certificateTitle: "Certificates",
+        certificateDescription: "Birth • Income • Other certificates",
+
+        licenseTitle: "Licences",
+        licenseDescription: "Driving and other licences",
+
+        vehicleTitle: "Vehicles",
+        vehicleDescription: "Registration • RC • Transport",
+
+        welfareTitle: "Welfare Schemes",
+        welfareDescription: "Benefits and government schemes",
+
+        smartNavigation: "SMART NAVIGATION",
+        navigatorHeading: "You don't need to know the service name.",
+        navigatorDescription: "Simply describe your problem in everyday language. Our AI will help identify the government service you may need.",
+        trySaying: "Try saying:",
+        exampleQuestion: "\"I need a document to prove my income.\"",
+        findMyService: "Find My Service",
+
+        aiNavigator: "✨ AI NAVIGATOR",
+        serviceIdentification: "Service identification",
+        aiReady: "AI Ready",
+
+        emptyHeading: "Tell us what you need",
+        emptyDescription: "Your suggested government service will appear here.",
+
+        quickAccess: "QUICK ACCESS",
+        popularServices: "Popular Government Services",
+
+        panTitle: "PAN Card",
+        panDescription: "Identity & tax",
+
+        voterTitle: "Voter ID",
+        voterDescription: "Election services",
+
+        passportTitle: "Passport",
+        passportDescription: "Travel document",
+
+        incomeTitle: "Income Certificate",
+        incomeDescription: "Certificates",
+
+        builtForCitizens: "BUILT FOR CITIZENS",
+        simplerHeading: "Government services, made simpler.",
+
+        simpleGuidance: "Simple Guidance",
+        simpleGuidanceDescription: "Complex government procedures explained in simple language.",
+
+        multilingual: "Multilingual",
+        multilingualDescription: "Access assistance in multiple Indian languages.",
+
+        voiceEnabled: "Voice Enabled",
+        voiceEnabledDescription: "Speak your question instead of typing it.",
+
+        privacyFirst: "Privacy First",
+        privacyDescription: "Never share OTPs, passwords, PINs or sensitive information.",
+
+        safetyTitle: "Your safety comes first.",
+        safetyDescription: "We will never ask you for an OTP, password, bank PIN or card details.",
+
+        footerTitle: "🇮🇳 Government Service Navigator",
+        footerDescription: "Making government services easier to understand and access."
+
+    },
+
+
+    Tamil: {
+
+        brandTitle: "அரசு சேவை வழிகாட்டி",
+        brandSubtitle: "அரசு சேவைகளுக்கான உங்கள் அறிவார்ந்த வழிகாட்டி",
+        heroBadge: "✨ AI மூலம் இயங்கும் அரசு சேவை உதவி",
+        heroHeading: "இன்று நாங்கள் உங்களுக்கு எப்படி உதவலாம்",
+        heroToday: "?",
+        heroSubtitle: "உங்களுக்கு தேவையானதை உங்கள் சொந்த வார்த்தைகளில் கூறுங்கள். சரியான அரசு சேவையை கண்டறிய நாங்கள் உதவுகிறோம்.",
+        placeholder: "உதாரணம்: எனக்கு வருமானச் சான்றிதழ் வேண்டும்...",
+        findService: "சேவையைக் கண்டறியவும்",
+        mute: "ஒலி நிறுத்து",
+        speak: "பேசுங்கள்",
+        askAI: "AI-யிடம் கேளுங்கள்",
+        popular: "பிரபலமானவை:",
+        explore: "ஆராயுங்கள்",
+        exploreHeading: "நீங்கள் எதைத் தேடுகிறீர்கள்?",
+        serviceCount: "5+ சேவைகள் உள்ளன",
+
+        identityTitle: "அடையாளம் மற்றும் ஆவணங்கள்",
+        identityDescription: "PAN • வாக்காளர் அட்டை • பாஸ்போர்ட்",
+
+        travelTitle: "பயணம் மற்றும் பாஸ்போர்ட்",
+        travelDescription: "பாஸ்போர்ட் மற்றும் பயண சேவைகள்",
+
+        certificateTitle: "சான்றிதழ்கள்",
+        certificateDescription: "பிறப்பு • வருமானம் • பிற சான்றிதழ்கள்",
+
+        licenseTitle: "உரிமங்கள்",
+        licenseDescription: "ஓட்டுநர் மற்றும் பிற உரிமங்கள்",
+
+        vehicleTitle: "வாகனங்கள்",
+        vehicleDescription: "பதிவு • RC • போக்குவரத்து",
+
+        welfareTitle: "நலத்திட்டங்கள்",
+        welfareDescription: "அரசு நலன்கள் மற்றும் திட்டங்கள்",
+
+        smartNavigation: "ஸ்மார்ட் வழிகாட்டுதல்",
+        navigatorHeading: "சேவையின் பெயர் உங்களுக்குத் தெரிய வேண்டியதில்லை.",
+        navigatorDescription: "உங்கள் பிரச்சினையை சாதாரண வார்த்தைகளில் கூறுங்கள். உங்களுக்கு தேவையான அரசு சேவையை AI கண்டறிய உதவும்.",
+        trySaying: "இப்படிக் கேளுங்கள்:",
+        exampleQuestion: "\"எனது வருமானத்தை நிரூபிக்க ஒரு ஆவணம் வேண்டும்.\"",
+        findMyService: "எனது சேவையைக் கண்டறியவும்",
+
+        aiNavigator: "✨ AI வழிகாட்டி",
+        serviceIdentification: "சேவை அடையாளம்",
+        aiReady: "AI தயாராக உள்ளது",
+
+        emptyHeading: "உங்களுக்கு என்ன தேவை என்று கூறுங்கள்",
+        emptyDescription: "உங்களுக்கான அரசு சேவை இங்கே தோன்றும்.",
+
+        quickAccess: "விரைவு அணுகல்",
+        popularServices: "பிரபலமான அரசு சேவைகள்",
+
+        panTitle: "PAN அட்டை",
+        panDescription: "அடையாளம் மற்றும் வரி",
+
+        voterTitle: "வாக்காளர் அட்டை",
+        voterDescription: "தேர்தல் சேவைகள்",
+
+        passportTitle: "பாஸ்போர்ட்",
+        passportDescription: "பயண ஆவணம்",
+
+        incomeTitle: "வருமானச் சான்றிதழ்",
+        incomeDescription: "சான்றிதழ்கள்",
+
+        builtForCitizens: "மக்களுக்காக உருவாக்கப்பட்டது",
+        simplerHeading: "அரசு சேவைகள், இப்போது எளிமையாக.",
+
+        simpleGuidance: "எளிய வழிகாட்டுதல்",
+        simpleGuidanceDescription: "சிக்கலான அரசு நடைமுறைகள் எளிய மொழியில் விளக்கப்படுகின்றன.",
+
+        multilingual: "பல மொழிகள்",
+        multilingualDescription: "பல இந்திய மொழிகளில் உதவியைப் பெறுங்கள்.",
+
+        voiceEnabled: "குரல் வசதி",
+        voiceEnabledDescription: "தட்டச்சு செய்வதற்குப் பதிலாக உங்கள் கேள்வியைப் பேசுங்கள்.",
+
+        privacyFirst: "தனியுரிமைக்கு முன்னுரிமை",
+        privacyDescription: "OTP, கடவுச்சொல், PIN அல்லது முக்கியமான தகவல்களைப் பகிர வேண்டாம்.",
+
+        safetyTitle: "உங்கள் பாதுகாப்பே முதன்மை.",
+        safetyDescription: "OTP, கடவுச்சொல், வங்கி PIN அல்லது அட்டை விவரங்களை நாங்கள் ஒருபோதும் கேட்க மாட்டோம்.",
+
+        footerTitle: "🇮🇳 அரசு சேவை வழிகாட்டி",
+        footerDescription: "அரசு சேவைகளைப் புரிந்துகொள்வதையும் அணுகுவதையும் எளிதாக்குகிறது."
+
+    },
+
+
+    Hindi: {
+
+        brandTitle: "सरकारी सेवा मार्गदर्शक",
+        brandSubtitle: "सरकारी सेवाओं के लिए आपका बुद्धिमान मार्गदर्शक",
+        heroBadge: "✨ AI-संचालित सरकारी सेवा सहायता",
+        heroHeading: "आज हम आपकी कैसे मदद कर सकते हैं",
+        heroToday: "?",
+        heroSubtitle: "आपको जो चाहिए उसे अपने शब्दों में बताएं। हम सही सरकारी सेवा खोजने में आपकी मदद करेंगे।",
+        placeholder: "उदाहरण: मुझे आय प्रमाण पत्र चाहिए...",
+        findService: "सेवा खोजें",
+        mute: "म्यूट",
+        speak: "बोलें",
+        askAI: "AI से पूछें",
+        popular: "लोकप्रिय:",
+        explore: "अन्वेषण करें",
+        exploreHeading: "आप क्या खोज रहे हैं?",
+        serviceCount: "5+ सेवाएं उपलब्ध हैं",
+
+        identityTitle: "पहचान और दस्तावेज़",
+        identityDescription: "PAN • मतदाता ID • पासपोर्ट",
+
+        travelTitle: "यात्रा और पासपोर्ट",
+        travelDescription: "पासपोर्ट और यात्रा सेवाएं",
+
+        certificateTitle: "प्रमाणपत्र",
+        certificateDescription: "जन्म • आय • अन्य प्रमाणपत्र",
+
+        licenseTitle: "लाइसेंस",
+        licenseDescription: "ड्राइविंग और अन्य लाइसेंस",
+
+        vehicleTitle: "वाहन",
+        vehicleDescription: "पंजीकरण • RC • परिवहन",
+
+        welfareTitle: "कल्याण योजनाएं",
+        welfareDescription: "सरकारी लाभ और योजनाएं",
+
+        smartNavigation: "स्मार्ट नेविगेशन",
+        navigatorHeading: "आपको सेवा का नाम जानने की आवश्यकता नहीं है।",
+        navigatorDescription: "अपनी समस्या को सामान्य भाषा में बताएं। AI आपके लिए आवश्यक सरकारी सेवा पहचानने में मदद करेगा।",
+        trySaying: "ऐसा कहें:",
+        exampleQuestion: "\"मुझे अपनी आय साबित करने के लिए एक दस्तावेज चाहिए।\"",
+        findMyService: "मेरी सेवा खोजें",
+
+        aiNavigator: "✨ AI मार्गदर्शक",
+        serviceIdentification: "सेवा पहचान",
+        aiReady: "AI तैयार है",
+
+        emptyHeading: "हमें बताएं आपको क्या चाहिए",
+        emptyDescription: "आपके लिए सुझाई गई सरकारी सेवा यहां दिखाई देगी।",
+
+        quickAccess: "त्वरित पहुंच",
+        popularServices: "लोकप्रिय सरकारी सेवाएं",
+
+        panTitle: "PAN कार्ड",
+        panDescription: "पहचान और कर",
+
+        voterTitle: "मतदाता ID",
+        voterDescription: "चुनाव सेवाएं",
+
+        passportTitle: "पासपोर्ट",
+        passportDescription: "यात्रा दस्तावेज़",
+
+        incomeTitle: "आय प्रमाण पत्र",
+        incomeDescription: "प्रमाणपत्र",
+
+        builtForCitizens: "नागरिकों के लिए बनाया गया",
+        simplerHeading: "सरकारी सेवाएं, अब आसान।",
+
+        simpleGuidance: "सरल मार्गदर्शन",
+        simpleGuidanceDescription: "जटिल सरकारी प्रक्रियाओं को सरल भाषा में समझाया जाता है।",
+
+        multilingual: "बहुभाषी",
+        multilingualDescription: "कई भारतीय भाषाओं में सहायता प्राप्त करें।",
+
+        voiceEnabled: "वॉइस सुविधा",
+        voiceEnabledDescription: "टाइप करने के बजाय अपना प्रश्न बोलें।",
+
+        privacyFirst: "गोपनीयता पहले",
+        privacyDescription: "OTP, पासवर्ड, PIN या संवेदनशील जानकारी कभी साझा न करें।",
+
+        safetyTitle: "आपकी सुरक्षा सबसे पहले।",
+        safetyDescription: "हम कभी भी OTP, पासवर्ड, बैंक PIN या कार्ड विवरण नहीं मांगेंगे।",
+
+        footerTitle: "🇮🇳 सरकारी सेवा मार्गदर्शक",
+        footerDescription: "सरकारी सेवाओं को समझना और उन तक पहुंचना आसान बनाना।"
+
+    },
+
+
+    Telugu: {
+
+        brandTitle: "ప్రభుత్వ సేవల మార్గదర్శి",
+        brandSubtitle: "ప్రభుత్వ సేవలకు మీ తెలివైన మార్గదర్శి",
+        heroBadge: "✨ AI ఆధారిత ప్రభుత్వ సేవల సహాయం",
+        heroHeading: "ఈరోజు మేము మీకు ఎలా సహాయం చేయగలం",
+        heroToday: "?",
+        heroSubtitle: "మీకు కావాల్సిన విషయాన్ని మీ మాటల్లో చెప్పండి. సరైన ప్రభుత్వ సేవను కనుగొనడంలో మేము సహాయం చేస్తాము.",
+        placeholder: "ఉదాహరణ: నాకు ఆదాయ ధృవీకరణ పత్రం కావాలి...",
+        findService: "సేవను కనుగొనండి",
+        mute: "మ్యూట్",
+        speak: "మాట్లాడండి",
+        askAI: "AIని అడగండి",
+        popular: "ప్రసిద్ధమైనవి:",
+        explore: "అన్వేషించండి",
+        exploreHeading: "మీరు దేని కోసం వెతుకుతున్నారు?",
+        serviceCount: "5+ సేవలు అందుబాటులో ఉన్నాయి",
+
+        identityTitle: "గుర్తింపు మరియు పత్రాలు",
+        identityDescription: "PAN • ఓటర్ ID • పాస్‌పోర్ట్",
+
+        travelTitle: "ప్రయాణం మరియు పాస్‌పోర్ట్",
+        travelDescription: "పాస్‌పోర్ట్ మరియు ప్రయాణ సేవలు",
+
+        certificateTitle: "ధృవపత్రాలు",
+        certificateDescription: "జననం • ఆదాయం • ఇతర ధృవపత్రాలు",
+
+        licenseTitle: "లైసెన్సులు",
+        licenseDescription: "డ్రైవింగ్ మరియు ఇతర లైసెన్సులు",
+
+        vehicleTitle: "వాహనాలు",
+        vehicleDescription: "నమోదు • RC • రవాణా",
+
+        welfareTitle: "సంక్షేమ పథకాలు",
+        welfareDescription: "ప్రభుత్వ ప్రయోజనాలు మరియు పథకాలు",
+
+        smartNavigation: "స్మార్ట్ నావిగేషన్",
+        navigatorHeading: "మీకు సేవ పేరు తెలుసుకోవాల్సిన అవసరం లేదు.",
+        navigatorDescription: "మీ సమస్యను సాధారణ భాషలో వివరించండి. మీకు అవసరమైన ప్రభుత్వ సేవను AI గుర్తించడంలో సహాయం చేస్తుంది.",
+        trySaying: "ఇలా చెప్పండి:",
+        exampleQuestion: "\"నా ఆదాయాన్ని నిరూపించడానికి ఒక పత్రం కావాలి.\"",
+        findMyService: "నా సేవను కనుగొనండి",
+
+        aiNavigator: "✨ AI మార్గదర్శి",
+        serviceIdentification: "సేవ గుర్తింపు",
+        aiReady: "AI సిద్ధంగా ఉంది",
+
+        emptyHeading: "మీకు ఏమి కావాలో చెప్పండి",
+        emptyDescription: "మీకు సూచించిన ప్రభుత్వ సేవ ఇక్కడ కనిపిస్తుంది.",
+
+        quickAccess: "త్వరిత ప్రాప్యత",
+        popularServices: "ప్రసిద్ధ ప్రభుత్వ సేవలు",
+
+        panTitle: "PAN కార్డ్",
+        panDescription: "గుర్తింపు మరియు పన్ను",
+
+        voterTitle: "ఓటర్ ID",
+        voterDescription: "ఎన్నికల సేవలు",
+
+        passportTitle: "పాస్‌పోర్ట్",
+        passportDescription: "ప్రయాణ పత్రం",
+
+        incomeTitle: "ఆదాయ ధృవీకరణ పత్రం",
+        incomeDescription: "ధృవపత్రాలు",
+
+        builtForCitizens: "పౌరుల కోసం రూపొందించబడింది",
+        simplerHeading: "ప్రభుత్వ సేవలు, ఇప్పుడు సులభంగా.",
+
+        simpleGuidance: "సులభమైన మార్గదర్శకత్వం",
+        simpleGuidanceDescription: "సంక్లిష్టమైన ప్రభుత్వ విధానాలను సులభమైన భాషలో వివరిస్తాము.",
+
+        multilingual: "బహుభాషా",
+        multilingualDescription: "అనేక భారతీయ భాషల్లో సహాయం పొందండి.",
+
+        voiceEnabled: "వాయిస్ సదుపాయం",
+        voiceEnabledDescription: "టైప్ చేయడానికి బదులుగా మీ ప్రశ్నను మాట్లాడండి.",
+
+        privacyFirst: "గోప్యతకు ప్రాధాన్యత",
+        privacyDescription: "OTPలు, పాస్‌వర్డ్‌లు, PINలు లేదా సున్నితమైన సమాచారాన్ని பంచుకోవద్దు.",
+
+        safetyTitle: "మీ భద్రతే మా మొదటి ప్రాధాన్యత.",
+        safetyDescription: "మేము ఎప్పుడూ OTP, పాస్‌వర్డ్, బ్యాంక్ PIN లేదా కార్డ్ వివరాలను అడగము.",
+
+        footerTitle: "🇮🇳 ప్రభుత్వ సేవల మార్గదర్శి",
+        footerDescription: "ప్రభుత్వ సేవలను అర్థం చేసుకోవడం మరియు పొందడం సులభం చేయడం."
+
+    },
+
+
+    Malayalam: {
+
+        brandTitle: "സർക്കാർ സേവന ഗൈഡ്",
+        brandSubtitle: "സർക്കാർ സേവനങ്ങൾക്കായുള്ള നിങ്ങളുടെ ബുദ്ധിപരമായ ഗൈഡ്",
+        heroBadge: "✨ AI അടിസ്ഥാനമാക്കിയുള്ള സർക്കാർ സേവന സഹായം",
+        heroHeading: "ഇന്ന് ഞങ്ങൾക്ക് നിങ്ങളെ എങ്ങനെ സഹായിക്കാനാകും",
+        heroToday: "?",
+        heroSubtitle: "നിങ്ങൾക്ക് ആവശ്യമുള്ളത് നിങ്ങളുടെ സ്വന്തം വാക്കുകളിൽ പറയുക. ശരിയായ സർക്കാർ സേവനം കണ്ടെത്താൻ ഞങ്ങൾ സഹായിക്കും.",
+        placeholder: "ഉദാഹരണം: എനിക്ക് വരുമാന സർട്ടിഫിക്കറ്റ് വേണം...",
+        findService: "സേവനം കണ്ടെത്തുക",
+        mute: "മ്യൂട്ട്",
+        speak: "സംസാരിക്കുക",
+        askAI: "AIയോട് ചോദിക്കുക",
+        popular: "ജനപ്രിയം:",
+        explore: "പര്യവേക്ഷണം ചെയ്യുക",
+        exploreHeading: "നിങ്ങൾ എന്താണ് അന്വേഷിക്കുന്നത്?",
+        serviceCount: "5+ സേവനങ്ങൾ ലഭ്യമാണ്",
+
+        identityTitle: "തിരിച്ചറിയലും രേഖകളും",
+        identityDescription: "PAN • വോട്ടർ ID • പാസ്‌പോർട്ട്",
+
+        travelTitle: "യാത്രയും പാസ്‌പോർട്ടും",
+        travelDescription: "പാസ്‌പോർട്ടും യാത്രാ സേവനങ്ങളും",
+
+        certificateTitle: "സർട്ടിഫിക്കറ്റുകൾ",
+        certificateDescription: "ജനനം • വരുമാനം • മറ്റ് സർട്ടിഫിക്കറ്റുകൾ",
+
+        licenseTitle: "ലൈസൻസുകൾ",
+        licenseDescription: "ഡ്രൈവിംഗും മറ്റ് ലൈസൻസുകളും",
+
+        vehicleTitle: "വാഹനങ്ങൾ",
+        vehicleDescription: "രജിസ്ട്രേഷൻ • RC • ഗതാഗതം",
+
+        welfareTitle: "ക്ഷേമ പദ്ധതികൾ",
+        welfareDescription: "സർക്കാർ ആനുകൂല്യങ്ങളും പദ്ധതികളും",
+
+        smartNavigation: "സ്മാർട്ട് നാവിഗേഷൻ",
+        navigatorHeading: "സേവനത്തിന്റെ പേര് നിങ്ങൾക്ക് അറിയേണ്ടതില്ല.",
+        navigatorDescription: "നിങ്ങളുടെ പ്രശ്നം സാധാരണ ഭാഷയിൽ വിവരിക്കുക. നിങ്ങൾക്ക് ആവശ്യമായ സർക്കാർ സേവനം കണ്ടെത്താൻ AI സഹായിക്കും.",
+        trySaying: "ഇങ്ങനെ പറയാം:",
+        exampleQuestion: "\"എന്റെ വരുമാനം തെളിയിക്കാൻ ഒരു രേഖ വേണം.\"",
+        findMyService: "എന്റെ സേവനം കണ്ടെത്തുക",
+
+        aiNavigator: "✨ AI ഗൈഡ്",
+        serviceIdentification: "സേവനം തിരിച്ചറിയൽ",
+        aiReady: "AI തയ്യാറാണ്",
+
+        emptyHeading: "നിങ്ങൾക്ക് എന്താണ് വേണ്ടതെന്ന് പറയുക",
+        emptyDescription: "നിങ്ങൾക്കുള്ള സർക്കാർ സേവന നിർദ്ദേശം ഇവിടെ കാണിക്കും.",
+
+        quickAccess: "ദ്രുത പ്രവേശനം",
+        popularServices: "ജനപ്രിയ സർക്കാർ സേവനങ്ങൾ",
+
+        panTitle: "PAN കാർഡ്",
+        panDescription: "തിരിച്ചറിയലും നികുതിയും",
+
+        voterTitle: "വോട്ടർ ID",
+        voterDescription: "തിരഞ്ഞെടുപ്പ് സേവനങ്ങൾ",
+
+        passportTitle: "പാസ്‌പോർട്ട്",
+        passportDescription: "യാത്രാ രേഖ",
+
+        incomeTitle: "വരുമാന സർട്ടിഫിക്കറ്റ്",
+        incomeDescription: "സർട്ടിഫിക്കറ്റുകൾ",
+
+        builtForCitizens: "പൗരന്മാർക്കായി നിർമ്മിച്ചത്",
+        simplerHeading: "സർക്കാർ സേവനങ്ങൾ, ഇപ്പോൾ കൂടുതൽ ലളിതമായി.",
+
+        simpleGuidance: "ലളിതമായ മാർഗനിർദേശം",
+        simpleGuidanceDescription: "സങ്കീർണ്ണമായ സർക്കാർ നടപടിക്രമങ്ങൾ ലളിതമായ ഭാഷയിൽ വിശദീകരിക്കുന്നു.",
+
+        multilingual: "ബഹുഭാഷാ",
+        multilingualDescription: "നിരവധി ഇന്ത്യൻ ഭാഷകളിൽ സഹായം ലഭിക്കും.",
+
+        voiceEnabled: "വോയ്സ് സൗകര്യം",
+        voiceEnabledDescription: "ടൈപ്പ് ചെയ്യുന്നതിന് പകരം നിങ്ങളുടെ ചോദ്യം സംസാരിക്കുക.",
+
+        privacyFirst: "സ്വകാര്യതയ്ക്ക് മുൻഗണന",
+        privacyDescription: "OTP, പാസ്‌വേഡ്, PIN അല്ലെങ്കിൽ രഹസ്യ വിവരങ്ങൾ പങ്കിടരുത്.",
+
+        safetyTitle: "നിങ്ങളുടെ സുരക്ഷയാണ് ആദ്യം.",
+        safetyDescription: "OTP, പാസ്‌വേഡ്, ബാങ്ക് PIN അല്ലെങ്കിൽ കാർഡ് വിവരങ്ങൾ ഞങ്ങൾ ഒരിക്കലും ചോദിക്കില്ല.",
+
+        footerTitle: "🇮🇳 സർക്കാർ സേവന ഗൈഡ്",
+        footerDescription: "സർക്കാർ സേവനങ്ങൾ മനസ്സിലാക്കാനും ഉപയോഗിക്കാനും എളുപ്പമാക്കുന്നു."
+
+    },
+
+
+    Marathi: {
+
+        brandTitle: "सरकारी सेवा मार्गदर्शक",
+        brandSubtitle: "सरकारी सेवांसाठी तुमचा बुद्धिमान मार्गदर्शक",
+        heroBadge: "✨ AI-आधारित सरकारी सेवा सहाय्य",
+        heroHeading: "आज आम्ही तुम्हाला कशी मदत करू शकतो",
+        heroToday: "?",
+        heroSubtitle: "तुम्हाला काय हवे आहे ते तुमच्या शब्दांत सांगा. योग्य सरकारी सेवा शोधण्यात आम्ही मदत करू.",
+        placeholder: "उदाहरण: मला उत्पन्नाचा दाखला हवा आहे...",
+        findService: "सेवा शोधा",
+        mute: "म्यूट",
+        speak: "बोला",
+        askAI: "AI ला विचारा",
+        popular: "लोकप्रिय:",
+        explore: "अन्वेषण करा",
+        exploreHeading: "तुम्ही काय शोधत आहात?",
+        serviceCount: "5+ सेवा उपलब्ध आहेत",
+
+        identityTitle: "ओळख आणि कागदपत्रे",
+        identityDescription: "PAN • मतदार ID • पासपोर्ट",
+
+        travelTitle: "प्रवास आणि पासपोर्ट",
+        travelDescription: "पासपोर्ट आणि प्रवास सेवा",
+
+        certificateTitle: "प्रमाणपत्रे",
+        certificateDescription: "जन्म • उत्पन्न • इतर प्रमाणपत्रे",
+
+        licenseTitle: "परवाने",
+        licenseDescription: "ड्रायव्हिंग आणि इतर परवाने",
+
+        vehicleTitle: "वाहने",
+        vehicleDescription: "नोंदणी • RC • वाहतूक",
+
+        welfareTitle: "कल्याण योजना",
+        welfareDescription: "सरकारी लाभ आणि योजना",
+
+        smartNavigation: "स्मार्ट नेव्हिगेशन",
+        navigatorHeading: "तुम्हाला सेवेचे नाव माहित असणे आवश्यक नाही.",
+        navigatorDescription: "तुमची समस्या सामान्य भाषेत सांगा. तुम्हाला आवश्यक असलेली सरकारी सेवा शोधण्यात AI मदत करेल.",
+        trySaying: "असे सांगा:",
+        exampleQuestion: "\"माझे उत्पन्न सिद्ध करण्यासाठी मला एक कागदपत्र हवे आहे.\"",
+        findMyService: "माझी सेवा शोधा",
+
+        aiNavigator: "✨ AI मार्गदर्शक",
+        serviceIdentification: "सेवा ओळख",
+        aiReady: "AI तयार आहे",
+
+        emptyHeading: "तुम्हाला काय हवे आहे ते सांगा",
+        emptyDescription: "तुमच्यासाठी सुचवलेली सरकारी सेवा येथे दिसेल.",
+
+        quickAccess: "जलद प्रवेश",
+        popularServices: "लोकप्रिय सरकारी सेवा",
+
+        panTitle: "PAN कार्ड",
+        panDescription: "ओळख आणि कर",
+
+        voterTitle: "मतदार ID",
+        voterDescription: "निवडणूक सेवा",
+
+        passportTitle: "पासपोर्ट",
+        passportDescription: "प्रवास दस्तऐवज",
+
+        incomeTitle: "उत्पन्नाचा दाखला",
+        incomeDescription: "प्रमाणपत्रे",
+
+        builtForCitizens: "नागरिकांसाठी तयार केलेले",
+        simplerHeading: "सरकारी सेवा, आता अधिक सोप्या.",
+
+        simpleGuidance: "सोपे मार्गदर्शन",
+        simpleGuidanceDescription: "क्लिष्ट सरकारी प्रक्रिया सोप्या भाषेत समजावून सांगितल्या जातात.",
+
+        multilingual: "बहुभाषिक",
+        multilingualDescription: "अनेक भारतीय भाषांमध्ये मदत मिळवा.",
+
+        voiceEnabled: "व्हॉइस सुविधा",
+        voiceEnabledDescription: "टाइप करण्याऐवजी तुमचा प्रश्न बोला.",
+
+        privacyFirst: "गोपनीयतेला प्राधान्य",
+        privacyDescription: "OTP, पासवर्ड, PIN किंवा संवेदनशील माहिती कधीही शेअर करू नका.",
+
+        safetyTitle: "तुमची सुरक्षा सर्वात महत्त्वाची.",
+        safetyDescription: "आम्ही कधीही OTP, पासवर्ड, बँक PIN किंवा कार्ड तपशील विचारणार नाही.",
+
+        footerTitle: "🇮🇳 सरकारी सेवा मार्गदर्शक",
+        footerDescription: "सरकारी सेवा समजून घेणे आणि वापरणे सोपे करणे."
+
+    },
+
+
+    Bengali: {
+
+        brandTitle: "সরকারি পরিষেবা নির্দেশিকা",
+        brandSubtitle: "সরকারি পরিষেবার জন্য আপনার বুদ্ধিমান সহায়ক",
+        heroBadge: "✨ AI-চালিত সরকারি পরিষেবা সহায়তা",
+        heroHeading: "আজ আমরা আপনাকে কীভাবে সাহায্য করতে পারি",
+        heroToday: "?",
+        heroSubtitle: "আপনার কী প্রয়োজন তা নিজের ভাষায় বলুন। আমরা আপনাকে সঠিক সরকারি পরিষেবা খুঁজে পেতে সাহায্য করব।",
+        placeholder: "উদাহরণ: আমার একটি আয়ের শংসাপত্র দরকার...",
+        findService: "পরিষেবা খুঁজুন",
+        mute: "মিউট",
+        speak: "বলুন",
+        askAI: "AI-কে জিজ্ঞাসা করুন",
+        popular: "জনপ্রিয়:",
+        explore: "অন্বেষণ করুন",
+        exploreHeading: "আপনি কী খুঁজছেন?",
+        serviceCount: "5+ পরিষেবা উপলব্ধ",
+
+        identityTitle: "পরিচয় ও নথি",
+        identityDescription: "PAN • ভোটার ID • পাসপোর্ট",
+
+        travelTitle: "ভ্রমণ ও পাসপোর্ট",
+        travelDescription: "পাসপোর্ট এবং ভ্রমণ পরিষেবা",
+
+        certificateTitle: "শংসাপত্র",
+        certificateDescription: "জন্ম • আয় • অন্যান্য শংসাপত্র",
+
+        licenseTitle: "লাইসেন্স",
+        licenseDescription: "ড্রাইভিং এবং অন্যান্য লাইসেন্স",
+
+        vehicleTitle: "যানবাহন",
+        vehicleDescription: "নিবন্ধন • RC • পরিবহন",
+
+        welfareTitle: "কল্যাণ প্রকল্প",
+        welfareDescription: "সরকারি সুবিধা এবং প্রকল্প",
+
+        smartNavigation: "স্মার্ট নেভিগেশন",
+        navigatorHeading: "আপনার পরিষেবার নাম জানার প্রয়োজন নেই।",
+        navigatorDescription: "আপনার সমস্যাটি সাধারণ ভাষায় বলুন। আপনার প্রয়োজনীয় সরকারি পরিষেবা খুঁজে পেতে AI সাহায্য করবে।",
+        trySaying: "এভাবে বলুন:",
+        exampleQuestion: "\"আমার আয় প্রমাণ করার জন্য একটি নথি দরকার।\"",
+        findMyService: "আমার পরিষেবা খুঁজুন",
+
+        aiNavigator: "✨ AI নির্দেশিকা",
+        serviceIdentification: "পরিষেবা শনাক্তকরণ",
+        aiReady: "AI প্রস্তুত",
+
+        emptyHeading: "আপনার কী প্রয়োজন তা বলুন",
+        emptyDescription: "আপনার জন্য প্রস্তাবিত সরকারি পরিষেবা এখানে দেখা যাবে।",
+
+        quickAccess: "দ্রুত অ্যাক্সেস",
+        popularServices: "জনপ্রিয় সরকারি পরিষেবা",
+
+        panTitle: "PAN কার্ড",
+        panDescription: "পরিচয় ও কর",
+
+        voterTitle: "ভোটার ID",
+        voterDescription: "নির্বাচন পরিষেবা",
+
+        passportTitle: "পাসপোর্ট",
+        passportDescription: "ভ্রমণ নথি",
+
+        incomeTitle: "আয়ের শংসাপত্র",
+        incomeDescription: "শংসাপত্র",
+
+        builtForCitizens: "নাগরিকদের জন্য তৈরি",
+        simplerHeading: "সরকারি পরিষেবা, এখন আরও সহজ।",
+
+        simpleGuidance: "সহজ নির্দেশিকা",
+        simpleGuidanceDescription: "জটিল সরকারি প্রক্রিয়াগুলি সহজ ভাষায় ব্যাখ্যা করা হয়।",
+
+        multilingual: "বহুভাষিক",
+        multilingualDescription: "বিভিন্ন ভারতীয় ভাষায় সহায়তা পান।",
+
+        voiceEnabled: "ভয়েস সুবিধা",
+        voiceEnabledDescription: "টাইপ করার পরিবর্তে আপনার প্রশ্ন বলুন।",
+
+        privacyFirst: "গোপনীয়তা প্রথম",
+        privacyDescription: "OTP, পাসওয়ার্ড, PIN বা সংবেদনশীল তথ্য কখনও শেয়ার করবেন না।",
+
+        safetyTitle: "আপনার নিরাপত্তাই প্রথম।",
+        safetyDescription: "আমরা কখনও OTP, পাসওয়ার্ড, ব্যাংক PIN বা কার্ডের তথ্য চাইব না।",
+
+        footerTitle: "🇮🇳 সরকারি পরিষেবা নির্দেশিকা",
+        footerDescription: "সরকারি পরিষেবা বোঝা এবং ব্যবহার করা সহজ করে তোলা।"
+
+    }
+
+};
+
+
+
+/* =====================================================
+   APPLY LANGUAGE
+===================================================== */
+
+function applyLanguage(language) {
+
+    const t =
+        translations[language] ||
+        translations.English;
+
+
+    const textMap = {
+
+        brandTitle: t.brandTitle,
+        brandSubtitle: t.brandSubtitle,
+
+        heroBadge: t.heroBadge,
+        heroHeading: t.heroHeading,
+        heroToday: t.heroToday,
+        heroSubtitle: t.heroSubtitle,
+
+        speakButtonText: t.speak,
+        askAIButtonText: t.askAI,
+        findServiceText: t.findService,
+        muteText: t.mute,
+
+        popularText: t.popular,
+
+        exploreLabel: t.explore,
+        exploreHeading: t.exploreHeading,
+        serviceCount: t.serviceCount,
+
+        identityTitle: t.identityTitle,
+        identityDescription: t.identityDescription,
+
+        travelTitle: t.travelTitle,
+        travelDescription: t.travelDescription,
+
+        certificateTitle: t.certificateTitle,
+        certificateDescription: t.certificateDescription,
+
+        licenseTitle: t.licenseTitle,
+        licenseDescription: t.licenseDescription,
+
+        vehicleTitle: t.vehicleTitle,
+        vehicleDescription: t.vehicleDescription,
+
+        welfareTitle: t.welfareTitle,
+        welfareDescription: t.welfareDescription,
+
+        smartNavigation: t.smartNavigation,
+        navigatorHeading: t.navigatorHeading,
+        navigatorDescription: t.navigatorDescription,
+
+        trySaying: t.trySaying,
+        exampleQuestion: t.exampleQuestion,
+        findMyService: t.findMyService,
+
+        aiNavigator: t.aiNavigator,
+        serviceIdentification: t.serviceIdentification,
+        aiReady: t.aiReady,
+
+        emptyHeading: t.emptyHeading,
+        emptyDescription: t.emptyDescription,
+
+        quickAccessLabel: t.quickAccess,
+        popularServicesHeading: t.popularServices,
+
+        panTitle: t.panTitle,
+        panDescription: t.panDescription,
+
+        voterTitle: t.voterTitle,
+        voterDescription: t.voterDescription,
+
+        passportTitle: t.passportTitle,
+        passportDescription: t.passportDescription,
+
+        incomeTitle: t.incomeTitle,
+        incomeDescription: t.incomeDescription,
+
+        builtForCitizens: t.builtForCitizens,
+        simplerHeading: t.simplerHeading,
+
+        simpleGuidance: t.simpleGuidance,
+        simpleGuidanceDescription: t.simpleGuidanceDescription,
+
+        multilingualTitle: t.multilingual,
+        multilingualDescription: t.multilingualDescription,
+
+        voiceEnabled: t.voiceEnabled,
+        voiceEnabledDescription: t.voiceEnabledDescription,
+
+        privacyFirst: t.privacyFirst,
+        privacyDescription: t.privacyDescription,
+
+        safetyTitle: t.safetyTitle,
+        safetyDescription: t.safetyDescription,
+
+        footerTitle: t.footerTitle,
+        footerDescription: t.footerDescription
+
+    };
+
+
+    Object.keys(textMap).forEach(function(id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+
+            element.textContent =
+                textMap[id];
+
+        }
+
+    });
+
+
+    const question =
+        document.getElementById("question");
+
+
+    if (question) {
+
+        question.placeholder =
+            t.placeholder;
+
+    }
+
+
+    document.documentElement.lang =
+        language;
+
+}
+
+
+
+/* =====================================================
+   INITIAL LANGUAGE SELECTION
+===================================================== */
+
+function selectInitialLanguage(language) {
+
+    /* Save language */
+
+    localStorage.setItem(
+        "selectedLanguage",
+        language
+    );
+
+
+    /* Set dropdown */
+
+    const languageDropdown =
+        document.getElementById("language");
+
+
+    if (languageDropdown) {
+
+        languageDropdown.value =
+            language;
+
+    }
+
+
+    /* Translate main website */
+
+    applyLanguage(language);
+
+
+    /* Hide language page */
+
+    const languagePage =
+        document.getElementById(
+            "languageSelectionPage"
+        );
+
+    if (languagePage) {
+
+        languagePage.style.display =
+            "none";
+
+    }
+
+
+    /* Show main website */
+
+    const mainWebsite =
+        document.getElementById(
+            "mainWebsite"
+        );
+
+    if (mainWebsite) {
+
+        mainWebsite.style.display =
+            "block";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        /*
+           IMPORTANT:
+
+           We deliberately DO NOT read
+           selectedLanguage here.
+
+           This means the language page
+           ALWAYS appears when the website
+           is opened.
+        */
+
+
+        const languagePage =
+            document.getElementById(
+                "languageSelectionPage"
+            );
+
+
+        const mainWebsite =
+            document.getElementById(
+                "mainWebsite"
+            );
+
+
+        /* Always show first page */
+
+        if (languagePage) {
+
+            languagePage.style.display =
+                "flex";
+
+        }
+
+
+        /* Keep main website hidden */
+
+        if (mainWebsite) {
+
+            mainWebsite.style.display =
+                "none";
+
+        }
+
+
+        /* ============================================
+           LANGUAGE DROPDOWN
+        ============================================ */
+
+        const languageDropdown =
+            document.getElementById(
+                "language"
+            );
+
+
+        if (languageDropdown) {
+
+            languageDropdown.addEventListener(
+                "change",
+                function() {
+
+                    const language =
+                        this.value;
+
+
+                    localStorage.setItem(
+                        "selectedLanguage",
+                        language
+                    );
+
+
+                    applyLanguage(
+                        language
+                    );
+
+                }
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+
+<!-- =====================================================
+     EXISTING BACKEND JAVASCRIPT
+===================================================== -->
+
+<script
+    src="{{ url_for('static', filename='script.js') }}">
+</script>
+
+
+</body>
+
+</html>

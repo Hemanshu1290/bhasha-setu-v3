@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Government Service Navigator
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f5f7ff,
+                    #ffffff,
+                    #f5f1ff
+                );
+
+            color: #111827;
+
+        }
+
+
+        .language-container {
+
+            width: min(900px, 92%);
+
+            padding: 45px;
+
+            background: rgba(
+                255,
+                255,
+                255,
+                0.96
+            );
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.10);
+
+            text-align: center;
+
+        }
+
+
+        .india-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 22px;
+
+            background: #f3efff;
+
+            font-size: 38px;
+
+        }
+
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            border-radius: 30px;
+
+            background: #f0edff;
+
+            color: #5b4bc4;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        h1 {
+
+            margin: 18px 0 10px;
+
+            font-size: 36px;
+
+        }
+
+
+        .subtitle {
+
+            margin: 0 auto 35px;
+
+            max-width: 600px;
+
+            line-height: 1.6;
+
+            color: #6b7280;
+
+        }
+
+
+        .language-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+
+        }
+
+
+        .language-button {
+
+            border: 2px solid #eeeeee;
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 22px 15px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+
+        }
+
+
+        .language-button:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color: #8b7bea;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .language-symbol {
+
+            font-size: 28px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .native-name {
+
+            display: block;
+
+            font-size: 19px;
+
+            font-weight: 700;
+
+        }
+
+
+        .english-name {
+
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 12px;
+
+            color: #9ca3af;
+
+        }
+
+
+        .loading {
+
+            display: none;
+
+            margin-top: 25px;
+
+            color: #6b7280;
+
+        }
+
+
+        .footer-text {
+
+            margin-top: 30px;
+
+            font-size: 12px;
+
+            color: #9ca3af;
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .language-container {
+
+                padding: 30px 20px;
+
+            }
+
+            h1 {
+
+                font-size: 28px;
+
+            }
+
+            .language-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .language-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="language-container">
+
+
+    <div class="india-icon">
+        🇮🇳
+    </div>
+
+
+    <span class="badge">
+
+        MULTILINGUAL GOVERNMENT ASSISTANT
+
+    </span>
+
+
+    <h1>
+
+        Choose Your Language
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        Select your preferred language to continue.
+        The Government Service Navigator will guide
+        you through government services in your
+        chosen language.
+
+    </p>
+
+
+    <div class="language-grid">
+
+
+        <!-- ENGLISH -->
+
+        <button
+            class="language-button"
+            onclick="selectLanguage('English')">
+
+            <div class="language-symbol">
+                🇬🇧
+            </div>
+
+            <span class="native-name">
+                English
+            </span>
+
+            <span class="english-name">
+                English
+            </span>
+
+        </button>
+
+
+        <!-- TAMIL -->
+
+        <button
+            class="language-button"
+            onclick="selectLanguage('Tamil')">
+
+            <div class="language-symbol">
+                தமிழ்
+            </div>
+
+            <span class="native-name">
+                தமிழ்
+            </span>
+
+            <span class="english-name">
+                Tamil
+            </span>
+
+        </button>
+
+
+        <!-- HINDI -->
+
+        <button
+            class="language-button"
+            onclick="selectLanguage('Hindi')">
+
+            <div class="language-symbol">
+                हिन्दी
+            </div>
+
+            <span class="native-name">
+                हिन्दी
+            </span>
+
+            <span class="english-name">
+                Hindi
+            </span>
+
+        </button>
+
+
+        <!-- TELUGU -->
+
+        <button
+            class="language-button"
+            onclick="selectLanguage('Telugu')">
+
+            <div class="language-symbol">
+                తెలుగు
+            </div>
+
+            <span class="native-name">
+                తెలుగు
+            </span>
+
+            <span class="english-name">
+                Telugu
+            </span>
+
+        </button>
+
+
+        <!-- MALAYALAM -->
+
+        <button
+            class="language-button"
+            onclick="selectLanguage('Malayalam')">
+
+            <div class="language-symbol">
+                മലയാളം
+            </div>
+
+            <span class="native-name">
+                മലയാളം
+            </span>
+
+            <span class="english-name">
+                Malayalam
+            </span>
+
+        </button>
+
+
+        <!-- MARATHI -->
+
+        <button
+            class="language-button"
+            onclick="selectLanguage('Marathi')">
+
+            <div class="language-symbol">
+                मराठी
+            </div>
+
+            <span class="native-name">
+                मराठी
+            </span>
+
+            <span class="english-name">
+                Marathi
+            </span>
+
+        </button>
+
+
+        <!-- BENGALI -->
+
+        <button
+            class="language-button"
+            onclick="selectLanguage('Bengali')">
+
+            <div class="language-symbol">
+                বাংলা
+            </div>
+
+            <span class="native-name">
+                বাংলা
+            </span>
+
+            <span class="english-name">
+                Bengali
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+    <div
+        id="loading"
+        class="loading">
+
+        🌐 Loading your selected language...
+
+    </div>
+
+
+    <p class="footer-text">
+
+        You can change your language later from
+        the website.
+
+    </p>
+
+
+</div>
+
+
+
+<script>
+
+async function selectLanguage(language) {
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+
+    loading.style.display =
+        "block";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/set-language",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        language: language
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.success) {
+
+            window.location.href = "/";
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        loading.textContent =
+            "Something went wrong. Please try again.";
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
